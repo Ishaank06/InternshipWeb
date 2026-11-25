@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}My Skill Profile & Self-Rating | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-1">My Skill Profile & Proficiency Matrix</h3>
+            <p class="text-muted small mb-0">Rate your technical proficiency from 1 (Beginner) to 5 (Expert) and upload verifiable credentials.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex gap-2">
+            <a href="{% url 'resume_extractor' %}" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-text me-1"></i> Extract from Resume
+            </a>
+            <a href="{% url 'skill_gap_analysis' %}" class="btn btn-primary btn-sm">
+                <i class="bi bi-radar me-1"></i> Analyze Skill Gaps
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Add Skill Form -->
+        <div class="col-lg-4">
+            <div class="card-custom p-4 bg-white sticky-top" style="top: 80px;">
+                <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle text-primary me-2"></i> Add / Update Skill</h5>
+                <form method="post" action="{% url 'add_student_skill' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Select Skill</label>
+                        {{ form.skill }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Proficiency Level (1 - 5)</label>
+                        {{ form.proficiency }}
+                        <div class="form-text small">
+                            1: Beginner, 2: Elementary, 3: Intermediate, 4: Advanced, 5: Expert
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Certification Name (Optional)</label>
+                        {{ form.certificate_name }}
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold">Credential / Badge URL</label>
+                        {{ form.certificate_url }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-save me-1"></i> Save to Profile
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Current Skills List -->
+        <div class="col-lg-8">
+            <div class="card-custom p-4 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Mapped Skills ({{ student_skills.count }})</h5>
+                    <span class="badge bg-light text-dark border">Faculty Verification Supported</span>
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    {% for ss in student_skills %}
+                    <div class="p-3 border rounded-3 bg-light d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="fw-bold text-dark fs-6">{{ ss.skill.name }}</span>
+                                {% if ss.is_verified %}
+                                <span class="badge bg-primary-subtle text-primary small d-flex align-items-center gap-1">
+                                    <i class="bi bi-patch-check-fill"></i> Faculty Verified
+                                </span>
+                                {% else %}
+                                <span class="badge bg-secondary-subtle text-secondary small">Self-Rated</span>
+                                {% endif %}
+                                <span class="small text-muted">({{ ss.skill.category.name }})</span>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2 my-2">
+                                <span class="small fw-semibold text-secondary">Level {{ ss.proficiency }}/5</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar {% if ss.proficiency >= 4 %}bg-success{% elif ss.proficiency == 3 %}bg-primary{% else %}bg-warning{% endif %}" style="width: {% widthratio ss.proficiency 5 100 %}%"></div>
+                                </div>
+                            </div>
+
+                            {% if ss.certificate_name %}
+                            <div class="small text-muted">
+                                <i class="bi bi-award-fill text-warning me-1"></i> Cert: <strong>{{ ss.certificate_name }}</strong>
+                                {% if ss.certificate_url %}
+                                <a href="{{ ss.certificate_url }}" target="_blank" class="ms-1 text-primary text-decoration-none"><i class="bi bi-box-arrow-up-right"></i> Verify</a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'delete_student_skill' ss.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remove this skill?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-mortarboard fs-1 d-block mb-2"></i>
+                        No skills added yet. Use the form on the left to map your technical strengths!
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

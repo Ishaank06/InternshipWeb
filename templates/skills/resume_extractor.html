@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume & Project Skill Extractor | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1 mb-1">
+                <i class="bi bi-file-earmark-code me-1"></i> Smart Extraction Tool
+            </span>
+            <h3 class="fw-bold mb-0">Automated Resume & Project Skill Extractor</h3>
+            <p class="text-muted small mb-0">Paste your resume content, project summaries, or GitHub bio to automatically detect and map matching skills.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex gap-2">
+            <a href="{% url 'my_skills' %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-award me-1"></i> View My Skills
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Input Form -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 bg-white h-100">
+                <h5 class="fw-bold mb-3"><i class="bi bi-clipboard2-data text-primary me-2"></i> Paste Resume / Bio Text</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea name="resume_text" class="form-control" rows="12" placeholder="Paste your resume work experience, technical projects, or summary here... (e.g. Developed backend microservices with Python, Django, Docker and PostgreSQL. Deployed container clusters on Kubernetes. Integrated PyTorch machine learning models with REST API endpoints.)">{{ resume_text }}</textarea>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">Scans across all 5 master skill domains</span>
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                            <i class="bi bi-cpu me-1"></i> Extract Skills
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Extraction Results -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 bg-white h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="fw-bold mb-3"><i class="bi bi-check2-circle text-success me-2"></i> Detected Skills from Text</h5>
+                    
+                    {% if extracted_skills %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_detected" value="1">
+                        <input type="hidden" name="resume_text" value="{{ resume_text }}">
+
+                        <p class="small text-muted mb-3">
+                            Found <strong>{{ extracted_skills|length }}</strong> matching skills from the university taxonomy. Select which ones to add:
+                        </p>
+
+                        <div class="d-flex flex-column gap-2 mb-4" style="max-height: 280px; overflow-y: auto;">
+                            {% for item in extracted_skills %}
+                            <div class="p-2 border rounded-2 bg-light d-flex justify-content-between align-items-center">
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" name="selected_skills" value="{{ item.skill.id }}" id="chk_{{ item.skill.id }}" {% if not item.already_added %}checked{% else %}disabled{% endif %}>
+                                    <label class="form-check-label small fw-semibold" for="chk_{{ item.skill.id }}">
+                                        {{ item.skill.name }}
+                                        <span class="text-muted">({{ item.skill.category.name }})</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    {% if item.already_added %}
+                                    <span class="badge bg-secondary-subtle text-secondary small">Already on Profile</span>
+                                    {% else %}
+                                    <span class="badge bg-success-subtle text-success small">Ready to Add</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="row g-2 align-items-center p-3 bg-light rounded-3 mb-3">
+                            <div class="col-md-7">
+                                <label class="form-label small fw-semibold mb-0">Default Initial Proficiency:</label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="default_proficiency" class="form-select form-select-sm">
+                                    <option value="2">Level 2 (Elementary)</option>
+                                    <option value="3" selected>Level 3 (Intermediate)</option>
+                                    <option value="4">Level 4 (Advanced)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 fw-semibold">
+                            <i class="bi bi-plus-circle me-1"></i> Add Selected Skills to Profile
+                        </button>
+                    </form>
+                    {% elif resume_text %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-search fs-1 d-block mb-2"></i>
+                        No recognizable skills detected. Make sure to mention technologies like Python, Django, React, Docker, SQL, or Machine Learning.
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-arrow-left-circle fs-1 d-block mb-2 text-primary"></i>
+                        Paste your text on the left and click <strong>Extract Skills</strong> to get started!
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

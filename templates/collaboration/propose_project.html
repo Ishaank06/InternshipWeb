@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Propose Joint Project | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card-custom p-4 p-md-5 bg-white">
+                <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                    <div>
+                        <h3 class="fw-bold mb-1">Propose Industry-Academia Challenge</h3>
+                        <p class="text-muted small mb-0">Collaborate on Capstone projects, student R&D, or hackathons.</p>
+                    </div>
+                    <a href="{% url 'collaboration_hub' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> Back
+                    </a>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Challenge / Project Title</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Project Type</label>
+                            {{ form.project_type }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Team Size Limit (Students)</label>
+                            {{ form.team_size_limit }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Problem Statement & Scope</label>
+                        {{ form.description }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Expected Deliverables / Outcomes</label>
+                        {{ form.expected_outcomes }}
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Stipend / Grant Funding (Optional)</label>
+                            {{ form.stipend_grant }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Submission Deadline</label>
+                            {{ form.deadline }}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-rocket-takeoff me-1"></i> Submit Proposal
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}Skill Gap Analysis & Radar Benchmark | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1 mb-1">
+                <i class="bi bi-radar me-1"></i> Diagnostic Skill Match Engine
+            </span>
+            <h3 class="fw-bold mb-0">Interactive Skill Gap Analyzer</h3>
+            <p class="text-muted small mb-0">Compare your current skill profile against target corporate job descriptions in real-time.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex gap-2">
+            <a href="{% url 'my_skills' %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-pencil-square me-1"></i> Edit My Skills
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Select Target Opportunity Dropdown -->
+    <div class="card-custom p-3 mb-4 bg-white">
+        <label class="form-label small fw-bold text-secondary text-uppercase mb-2">
+            <i class="bi bi-bullseye text-danger me-1"></i> Select Target Internship or Placement Drive to Benchmark:
+        </label>
+        <div class="dropdown">
+            <button class="btn btn-light border w-100 text-start d-flex justify-content-between align-items-center py-2 px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <div>
+                    <strong>{{ selected_opp.title|default:'Select an Opportunity' }}</strong>
+                    <span class="text-muted small ms-2">@ {{ selected_opp.company.company_name }}</span>
+                </div>
+                <span class="badge bg-primary">{{ selected_opp.get_opportunity_type_display }}</span>
+            </button>
+            <ul class="dropdown-menu w-100 shadow-sm">
+                {% for opp in opportunities %}
+                <li>
+                    <a class="dropdown-item py-2 d-flex justify-content-between align-items-center {% if opp.id == selected_opp.id %}active{% endif %}" href="{% url 'skill_gap_analysis_opp' opp.id %}">
+                        <div>
+                            <span class="fw-semibold">{{ opp.title }}</span>
+                            <span class="text-muted small ms-1">({{ opp.company.company_name }})</span>
+                        </div>
+                        <span class="badge bg-light text-dark border">{{ opp.get_opportunity_type_display }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% if selected_opp %}
+    <!-- Match Score Summary Banner -->
+    <div class="card-custom p-4 mb-4 bg-white">
+        <div class="row align-items-center g-4">
+            <div class="col-md-3 text-center border-end-md">
+                <div class="small fw-bold text-secondary text-uppercase mb-1">Overall Match Score</div>
+                <div class="display-4 fw-extrabold {% if match_score >= 75 %}text-success{% elif match_score >= 50 %}text-primary{% else %}text-warning{% endif %}">
+                    {{ match_score }}%
+                </div>
+                <div class="badge {% if match_score >= 75 %}bg-success{% elif match_score >= 50 %}bg-primary{% else %}bg-warning text-dark{% endif %} px-3 py-2 mt-1">
+                    {% if match_score >= 75 %}Highly Compatible{% elif match_score >= 50 %}Moderate Readiness{% else %}Action Required{% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <h5 class="fw-bold mb-1">{{ selected_opp.title }}</h5>
+                <div class="text-secondary small mb-2">
+                    <i class="bi bi-building"></i> {{ selected_opp.company.company_name }}
+                    <span class="mx-2">•</span>
+                    <i class="bi bi-cash-stack"></i> {{ selected_opp.stipend_salary }}
+                    <span class="mx-2">•</span>
+                    <i class="bi bi-geo-alt"></i> {{ selected_opp.location }}
+                </div>
+                <p class="small text-muted mb-3">{{ selected_opp.description|truncatechars:200 }}</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-success-subtle text-success p-2 px-3"><i class="bi bi-check-circle-fill me-1"></i> {{ matching_skills|length }} Skills Meet/Exceed Bar</span>
+                    <span class="badge bg-warning-subtle text-warning p-2 px-3"><i class="bi bi-exclamation-diamond-fill me-1"></i> {{ missing_skills|length }} Skill Gaps Detected</span>
+                    <a href="{% url 'opportunity_detail' selected_opp.id %}" class="btn btn-sm btn-primary ms-auto">View Full Role Specs & Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Radar Chart & Skills Breakdown -->
+    <div class="row g-4">
+        <!-- Radar Visualization -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 h-100 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-hexagon-fill text-primary me-2"></i> Skill Competency Radar</h5>
+                    <span class="badge bg-light text-dark border">Scale: 1 to 5</span>
+                </div>
+                <p class="small text-muted">Blue outline denotes target industry bar; green filled area denotes your verified proficiency.</p>
+                
+                <div style="height: 340px; position: relative;">
+                    <canvas id="skillRadarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Missing & Matching Skills Breakdown -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 h-100 bg-white d-flex flex-column justify-content-between">
+                <div>
+                    <!-- Skill Gaps Section -->
+                    <h5 class="fw-bold text-danger mb-3">
+                        <i class="bi bi-shield-slash-fill me-2"></i> Identified Skill Gaps (Need Improvement)
+                    </h5>
+                    {% if missing_skills %}
+                    <div class="d-flex flex-column gap-2 mb-4">
+                        {% for gap in missing_skills %}
+                        <div class="p-3 border rounded-3 bg-light">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">{{ gap.skill_name }}</span>
+                                <span class="badge bg-danger-subtle text-danger">Gap: {{ gap.diff|stringformat:"+d" }} Levels</span>
+                            </div>
+                            <div class="small text-muted mb-2">
+                                Required: <strong>Level {{ gap.required }}/5</strong> | Your Current: <strong class="text-danger">Level {{ gap.student_level }}/5</strong>
+                            </div>
+                            <div class="small bg-white p-2 border rounded text-secondary">
+                                <i class="bi bi-lightbulb text-warning me-1"></i> <strong>Recommended Action:</strong> Complete practical projects or Coursera / NPTEL modules in {{ gap.skill_name }} to bridge this gap.
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success small mb-4">
+                        <i class="bi bi-check-circle-fill me-1"></i> Outstanding! You meet or exceed all required skills for this position!
+                    </div>
+                    {% endif %}
+
+                    <!-- Matching Skills Section -->
+                    <h5 class="fw-bold text-success mb-2">
+                        <i class="bi bi-patch-check-fill me-2"></i> Verified Matching Strengths
+                    </h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for match in matching_skills %}
+                        <span class="badge bg-success-subtle text-success p-2 px-3 border border-success-subtle">
+                            <i class="bi bi-check2"></i> {{ match.skill_name }} (Level {{ match.student_level }}/5)
+                        </span>
+                        {% empty %}
+                        <span class="small text-muted">No full matches yet. Add your certifications!</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-3 border-top text-end">
+                    <a href="{% url 'opportunity_detail' selected_opp.id %}" class="btn btn-success px-4">
+                        <i class="bi bi-send me-1"></i> Proceed to Apply
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const radarData = JSON.parse('{{ radar_json|safe }}');
+    
+    if (radarData.labels && radarData.labels.length > 0) {
+        const ctx = document.getElementById('skillRadarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: radarData.labels,
+                datasets: [
+                    {
+                        label: 'Required by Recruiter',
+                        data: radarData.required,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        pointBackgroundColor: '#2563eb',
+                        pointBorderColor: '#fff',
+                        borderWidth: 2,
+                    },
+                    {
+                        label: 'Your Current Proficiency',
+                        data: radarData.student,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.3)',
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#fff',
+                        borderWidth: 2,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 5,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 12,
+                                weight: '600'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}Academia - Industry Collaboration Hub | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <div>
+            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold px-2 py-1 mb-1">
+                <i class="bi bi-people-fill me-1"></i> Institutional Partnerships & MoUs
+            </span>
+            <h3 class="fw-bold mb-0">Academia - Industry Collaboration Hub</h3>
+            <p class="text-muted small mb-0">Joint Capstone projects, Board of Studies curriculum co-design, and active corporate MoUs.</p>
+        </div>
+        <div class="mt-3 mt-md-0 d-flex gap-2">
+            {% if user.is_authenticated and user_profile.is_recruiter %}
+            <a href="{% url 'submit_curriculum_feedback' %}" class="btn btn-primary btn-sm">
+                <i class="bi bi-journal-plus me-1"></i> Submit Syllabus Feedback
+            </a>
+            {% endif %}
+            {% if user.is_authenticated and not user_profile.is_student %}
+            <a href="{% url 'propose_project' %}" class="btn btn-outline-dark btn-sm">
+                <i class="bi bi-rocket-takeoff me-1"></i> Propose Joint Project
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Active MoUs Banner -->
+    <div class="card-custom p-4 mb-4 bg-white">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0"><i class="bi bi-award text-primary me-2"></i> Active Institutional MoUs ({{ mous.count }})</h5>
+            <span class="badge bg-success-subtle text-success">Accreditation Compliant</span>
+        </div>
+
+        <div class="row g-3">
+            {% for mou in mous %}
+            <div class="col-md-4">
+                <div class="p-3 border rounded-3 bg-light h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0 text-dark">{{ mou.company_name }}</h6>
+                        <span class="badge bg-success">Active</span>
+                    </div>
+                    <div class="small text-muted mb-2">
+                        <i class="bi bi-person-circle"></i> {{ mou.contact_person }}
+                    </div>
+                    <div class="small text-secondary mb-2">
+                        <i class="bi bi-calendar-check"></i> Valid: {{ mou.signing_date }} to {{ mou.valid_upto }}
+                    </div>
+                    <div class="small bg-white p-2 border rounded text-dark">
+                        <strong>Scope:</strong> {{ mou.focus_areas }}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center text-muted py-3">No active MoUs recorded.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Joint Capstone / R&D Projects -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 h-100 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-cpu text-info me-2"></i> Sponsored Capstone & R&D Challenges</h5>
+                    {% if user.is_authenticated and not user_profile.is_student %}
+                    <a href="{% url 'propose_project' %}" class="btn btn-sm btn-outline-primary">+ Propose</a>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    {% for project in projects %}
+                    <div class="p-3 border rounded-3 bg-light">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <span class="badge bg-primary-subtle text-primary">{{ project.get_project_type_display }}</span>
+                            <span class="badge {% if project.status == 'IN_PROGRESS' %}bg-warning text-dark{% else %}bg-info text-dark{% endif %}">
+                                {{ project.get_status_display }}
+                            </span>
+                        </div>
+                        <h6 class="fw-bold mb-1">{{ project.title }}</h6>
+                        <div class="small text-muted mb-2">
+                            <span><i class="bi bi-building"></i> {{ project.industry_partner.company_name|default:project.industry_partner.user.username }}</span>
+                            {% if project.faculty_mentor %}
+                            <span class="mx-2">•</span>
+                            <span><i class="bi bi-person-badge"></i> Mentor: {{ project.faculty_mentor.user.get_full_name }}</span>
+                            {% endif %}
+                        </div>
+                        <p class="small text-muted mb-2">{{ project.description }}</p>
+                        {% if project.stipend_grant %}
+                        <div class="small text-success fw-bold">
+                            <i class="bi bi-gift-fill me-1"></i> Grant / Funding: {{ project.stipend_grant }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center py-4">No joint projects proposed yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Curriculum Co-Design & Syllabus Feedback -->
+        <div class="col-lg-6">
+            <div class="card-custom p-4 h-100 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-book-half text-warning me-2"></i> Board of Studies Syllabus Co-Design</h5>
+                    {% if user.is_authenticated and user_profile.is_recruiter %}
+                    <a href="{% url 'submit_curriculum_feedback' %}" class="btn btn-sm btn-outline-primary">+ Submit</a>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    {% for fb in feedbacks %}
+                    <div class="p-3 border rounded-3 bg-light">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <strong class="text-dark">{{ fb.course_name }}</strong>
+                            <span class="badge {% if fb.status == 'ACCEPTED' %}bg-success{% elif fb.status == 'UNDER_EVALUATION' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                {{ fb.get_status_display }}
+                            </span>
+                        </div>
+                        <div class="small text-secondary mb-2">
+                            <span><i class="bi bi-building"></i> {{ fb.industry_partner.company_name }}</span>
+                            <span class="mx-2">•</span>
+                            <span>Dept: {{ fb.department }}</span>
+                        </div>
+                        <div class="small text-muted mb-2">
+                            <strong>Industry Gap Observed:</strong> {{ fb.observed_industry_gap }}
+                        </div>
+                        <div class="small text-primary mb-2">
+                            <strong>Proposed Technologies:</strong> {{ fb.proposed_technologies }}
+                        </div>
+                        {% if fb.academic_response %}
+                        <div class="small bg-white p-2 border rounded text-success">
+                            <i class="bi bi-check-circle-fill me-1"></i> <strong>BoS Action:</strong> {{ fb.academic_response }}
+                        </div>
+                        {% endif %}
+
+                        {% if user.is_authenticated and user_profile.is_faculty_tpo %}
+                        <div class="mt-2 pt-2 border-top text-end">
+                            <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#fbModal{{ fb.id }}">
+                                Review / Update BoS Decision
+                            </button>
+                        </div>
+
+                        <!-- BoS Modal -->
+                        <div class="modal fade" id="fbModal{{ fb.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold">Review Curriculum Recommendation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <form method="post" action="{% url 'update_feedback_status' fb.id %}">
+                                        {% csrf_token %}
+                                        <div class="modal-body small">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Decision Status</label>
+                                                <select name="status" class="form-select">
+                                                    <option value="ACCEPTED" {% if fb.status == 'ACCEPTED' %}selected{% endif %}>Accepted & Added to Syllabus</option>
+                                                    <option value="UNDER_EVALUATION" {% if fb.status == 'UNDER_EVALUATION' %}selected{% endif %}>Under Committee Evaluation</option>
+                                                    <option value="DECLINED" {% if fb.status == 'DECLINED' %}selected{% endif %}>Declined</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Academic Response / Minutes of Meeting</label>
+                                                <textarea name="academic_response" class="form-control" rows="3" placeholder="Enter department comments...">{{ fb.academic_response }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Save BoS Decision</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center py-4">No curriculum feedback submitted yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

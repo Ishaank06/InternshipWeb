@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile | SkillLink{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card-custom p-4 p-md-5">
+                <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                    <div>
+                        <h3 class="fw-bold mb-1">Profile & Account Settings</h3>
+                        <p class="text-muted small mb-0">Role: <span class="badge bg-primary">{{ profile.get_role_display }}</span></p>
+                    </div>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <h5 class="fw-bold mb-3 text-secondary">Basic Credentials</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Contact Phone</label>
+                            {{ form.phone }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold">Professional Bio / Summary</label>
+                        {{ form.bio }}
+                    </div>
+
+                    {% if profile.is_student %}
+                    <h5 class="fw-bold mb-3 text-primary border-top pt-3">Academic & Portfolio Details</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Roll / Registration Number</label>
+                            {{ form.roll_number }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Department / Branch</label>
+                            {{ form.department }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Graduation Year</label>
+                            {{ form.graduation_year }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Cumulative CGPA</label>
+                            {{ form.cgpa }}
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label small fw-semibold">Resume Link (Drive / Dropbox)</label>
+                            {{ form.resume_link }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">GitHub Profile URL</label>
+                            {{ form.github_link }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">LinkedIn Profile URL</label>
+                            {{ form.linkedin_link }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if profile.is_recruiter %}
+                    <h5 class="fw-bold mb-3 text-primary border-top pt-3">Company & Recruitment Details</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Company / Enterprise Name</label>
+                            {{ form.company_name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Industry Sector</label>
+                            {{ form.company_sector }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Recruiter Designation</label>
+                            {{ form.designation }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Company Website</label>
+                            {{ form.company_website }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold">Corporate Office Address</label>
+                            {{ form.company_address }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if profile.is_faculty_tpo %}
+                    <h5 class="fw-bold mb-3 text-primary border-top pt-3">Faculty / TPO Institutional Data</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Employee ID</label>
+                            {{ form.employee_id }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Department / Cell</label>
+                            {{ form.faculty_department }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4 pt-3 border-top">
+                        <button type="submit" class="btn btn-primary px-4 py-2">
+                            <i class="bi bi-check-circle me-1"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
