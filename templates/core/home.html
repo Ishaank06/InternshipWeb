@@ -26,25 +26,31 @@
                 </p>
 
                 <!-- 1-Click Demo Logins Card -->
-                <div class="app-card-static p-3 mb-4 rounded-3 border bg-white shadow-sm" style="max-width: 600px;">
+                <div class="app-card-static p-3 mb-4 rounded-3 border bg-white shadow-sm" style="max-width: 620px;">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <span class="small fw-bold text-uppercase text-secondary tracking-wider">
-                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Instant 1-Click Demo Logins
+                        <span class="small fw-bold text-uppercase text-secondary tracking-wider d-flex align-items-center gap-1">
+                            <i class="bi bi-lightning-charge-fill text-warning"></i> Instant 1-Click Demo Logins
                         </span>
                         <span class="badge bg-light text-dark border small">Ready to Test</span>
                     </div>
 
-                    <form method="post" action="{% url 'login' %}" class="d-flex flex-wrap gap-2">
+                    <form method="post" action="{% url 'login' %}" class="row g-2">
                         {% csrf_token %}
-                        <button type="submit" name="demo_user" value="student_rohan" class="btn btn-sm btn-outline-primary fw-semibold">
-                            <i class="bi bi-person-fill text-success me-1"></i> Student (Rohan)
-                        </button>
-                        <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-sm btn-outline-primary fw-semibold">
-                            <i class="bi bi-building text-primary me-1"></i> Recruiter (Google)
-                        </button>
-                        <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-sm btn-outline-primary fw-semibold">
-                            <i class="bi bi-mortarboard text-dark me-1"></i> TPO Head (Sharma)
-                        </button>
+                        <div class="col-sm-4">
+                            <button type="submit" name="demo_user" value="student_rohan" class="btn btn-sm btn-outline-primary w-100 justify-content-center fw-semibold">
+                                <i class="bi bi-person-fill text-success"></i> Student
+                            </button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-sm btn-outline-primary w-100 justify-content-center fw-semibold">
+                                <i class="bi bi-building text-primary"></i> Recruiter
+                            </button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-sm btn-outline-primary w-100 justify-content-center fw-semibold">
+                                <i class="bi bi-mortarboard text-dark"></i> TPO Head
+                            </button>
+                        </div>
                     </form>
                 </div>
 
@@ -77,28 +83,28 @@
                     <!-- Metrics Grid -->
                     <div class="row g-3 mb-3">
                         <div class="col-6">
-                            <div class="stat-card">
+                            <div class="stat-card-aligned">
                                 <div class="stat-label">Students</div>
                                 <div class="stat-number text-primary" data-count="{{ total_students }}">{{ total_students }}</div>
                                 <div class="small text-muted">Registered Cohort</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="stat-card">
+                            <div class="stat-card-aligned">
                                 <div class="stat-label">Offers Extended</div>
                                 <div class="stat-number text-success" data-count="{{ total_placed }}">{{ total_placed }}</div>
                                 <div class="small text-muted">Hired Talent</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="stat-card">
+                            <div class="stat-card-aligned">
                                 <div class="stat-label">Active Drives</div>
                                 <div class="stat-number text-info" data-count="{{ total_opportunities }}">{{ total_opportunities }}</div>
                                 <div class="small text-muted">Open Positions</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="stat-card">
+                            <div class="stat-card-aligned">
                                 <div class="stat-label">Corporate MoUs</div>
                                 <div class="stat-number text-warning" data-count="{{ total_mous }}">{{ total_mous }}</div>
                                 <div class="small text-muted">Active Ties</div>
@@ -207,32 +213,32 @@
             <div class="col-md-6 col-lg-3">
                 <div class="app-card p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
-                        <div class="d-flex align-items-start justify-content-between mb-2">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
                             <span class="badge-subtle {% if opp.opportunity_type == 'INTERNSHIP' %}badge-subtle-primary{% else %}badge-subtle-success{% endif %}">
                                 {{ opp.get_opportunity_type_display }}
                             </span>
-                            <span class="small text-muted">{{ opp.work_mode }}</span>
+                            <span class="small text-muted fw-semibold">{{ opp.work_mode }}</span>
                         </div>
 
-                        <h6 class="fw-bold mb-1">
+                        <h6 class="fw-bold mb-1 line-clamp-1" style="min-height: 24px;">
                             <a href="{% url 'opportunity_detail' opp.id %}" class="text-dark text-decoration-none">
                                 {{ opp.title }}
                             </a>
                         </h6>
-                        <div class="small text-secondary mb-2">
-                            <i class="bi bi-building me-1"></i> {{ opp.company.company_name|default:opp.company.user.username }}
+                        <div class="small text-secondary mb-2 line-clamp-1">
+                            <i class="bi bi-building me-1 text-primary"></i> {{ opp.company.company_name|default:opp.company.user.username }}
                         </div>
                         <div class="fw-bold text-success small mb-2">
                             <i class="bi bi-cash-stack me-1"></i> {{ opp.stipend_salary }}
                         </div>
-                        <p class="small text-muted line-clamp-2 mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        <p class="small text-muted line-clamp-2 mb-3" style="min-height: 38px;">
                             {{ opp.description }}
                         </p>
                     </div>
 
                     <div class="pt-3 border-top d-flex justify-content-between align-items-center">
-                        <span class="small text-muted"><i class="bi bi-geo-alt"></i> {{ opp.location|truncatechars:16 }}</span>
-                        <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-outline-primary">
+                        <span class="small text-muted text-truncate me-2"><i class="bi bi-geo-alt text-primary"></i> {{ opp.location|truncatechars:14 }}</span>
+                        <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-outline-primary text-nowrap">
                             Details
                         </a>
                     </div>

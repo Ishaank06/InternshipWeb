@@ -74,8 +74,8 @@
                         {% endif %}
                     </div>
 
-                    <h5 class="fw-bold mb-1">
-                        <a href="{% url 'opportunity_detail' item.opp.id %}" class="text-dark text-decoration-none">
+                    <h5 class="fw-bold mb-1 line-clamp-1">
+                        <a href="{% url 'opportunity_detail' item.opp.id %}" class="text-dark text-decoration-none" title="{{ item.opp.title }}">
                             {{ item.opp.title }}
                         </a>
                     </h5>

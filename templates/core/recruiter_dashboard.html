@@ -17,9 +17,8 @@
                         <span class="badge-role-pill badge-role-recruiter">Corporate Partner</span>
                     </div>
                     <div class="text-secondary small d-flex flex-wrap align-items-center gap-2">
-                        <span><i class="bi bi-person-circle text-primary me-1"></i> {{ user.get_full_name|default:user.username }} ({{ profile.designation|default:'Talent Partner' }})</span>
-                        <span class="text-muted">•</span>
-                        <span><i class="bi bi-tag text-primary me-1"></i> {{ profile.company_sector }}</span>
+                        <span class="meta-chip-item"><i class="bi bi-person-circle text-primary"></i> {{ user.get_full_name|default:user.username }} ({{ profile.designation|default:'Talent Partner' }})</span>
+                        <span class="meta-chip-item"><i class="bi bi-tag text-primary"></i> {{ profile.company_sector }}</span>
                     </div>
                 </div>
             </div>
@@ -37,31 +36,31 @@
     <!-- Animated Recruiter Stats -->
     <div class="row g-3 mb-4">
         <div class="col-md-3 col-6 animate-fade-up stagger-1">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Active Postings</div>
                 <div class="stat-number text-primary" data-count="{{ total_postings }}">{{ total_postings }}</div>
-                <div class="small text-muted">Drives & Internships</div>
+                <div class="small text-muted mt-auto pt-2">Drives & Internships</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-2">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Total Applicants</div>
                 <div class="stat-number text-info" data-count="{{ total_applicants }}">{{ total_applicants }}</div>
-                <div class="small text-muted">Received Across Roles</div>
+                <div class="small text-muted mt-auto pt-2">Received Across Roles</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-3">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Interviews Scheduled</div>
                 <div class="stat-number text-warning" data-count="{{ interview_count }}">{{ interview_count }}</div>
-                <div class="small text-muted">{{ shortlisted_count }} Candidates Shortlisted</div>
+                <div class="small text-muted mt-auto pt-2">{{ shortlisted_count }} Candidates Shortlisted</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-4">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Offers Extended</div>
                 <div class="stat-number text-success" data-count="{{ hired_count }}">{{ hired_count }}</div>
-                <div class="small text-success fw-bold"><i class="bi bi-check-circle-fill"></i> Hired Talent</div>
+                <div class="small text-success fw-bold mt-auto pt-2"><i class="bi bi-check-circle-fill"></i> Hired Talent</div>
             </div>
         </div>
     </div>

@@ -17,11 +17,9 @@
                         <span class="badge-role-pill badge-role-student">Student</span>
                     </div>
                     <div class="text-secondary small d-flex flex-wrap align-items-center gap-2">
-                        <span><i class="bi bi-card-text me-1 text-primary"></i> Roll: <strong>{{ profile.roll_number|default:'N/A' }}</strong></span>
-                        <span class="text-muted">•</span>
-                        <span><i class="bi bi-mortarboard me-1 text-primary"></i> {{ profile.department }}</span>
-                        <span class="text-muted">•</span>
-                        <span class="badge-subtle badge-subtle-success"><i class="bi bi-star-fill me-1"></i> CGPA: {{ profile.cgpa }}</span>
+                        <span class="meta-chip-item"><i class="bi bi-card-text text-primary"></i> Roll: <strong>{{ profile.roll_number|default:'N/A' }}</strong></span>
+                        <span class="meta-chip-item"><i class="bi bi-mortarboard text-primary"></i> {{ profile.department }}</span>
+                        <span class="meta-chip-item"><i class="bi bi-star-fill text-warning"></i> CGPA: <strong>{{ profile.cgpa }}</strong></span>
                     </div>
                 </div>
             </div>
@@ -39,33 +37,35 @@
     <!-- Animated Metric Cards -->
     <div class="row g-3 mb-4">
         <div class="col-md-3 col-6 animate-fade-up stagger-1">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Mapped Skills</div>
                 <div class="stat-number text-primary" data-count="{{ skill_count }}">{{ skill_count }}</div>
-                <div class="small text-muted">{{ verified_count }} Verified by Faculty</div>
+                <div class="small text-muted mt-auto pt-2">{{ verified_count }} Verified by Faculty</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-2">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Skill Readiness</div>
                 <div class="stat-number text-success" data-count="{{ readiness_index }}" data-is-pct="true">{{ readiness_index }}%</div>
-                <div class="progress" style="height: 6px;">
-                    <div class="progress-bar bg-success" style="width: {{ readiness_index }}%"></div>
+                <div class="w-100 mt-auto pt-2">
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-success" style="width: {{ readiness_index }}%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-3">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Applications Sent</div>
                 <div class="stat-number text-info" data-count="{{ applied_count }}">{{ applied_count }}</div>
-                <div class="small text-muted">{{ interviews_count }} Interviews Scheduled</div>
+                <div class="small text-muted mt-auto pt-2">{{ interviews_count }} Interviews Scheduled</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-4">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Job / Intern Offers</div>
                 <div class="stat-number text-warning" data-count="{{ offers_count }}">{{ offers_count }}</div>
-                <div class="small text-success fw-bold"><i class="bi bi-check-circle-fill"></i> Active Offers</div>
+                <div class="small text-success fw-bold mt-auto pt-2"><i class="bi bi-check-circle-fill"></i> Active Offers</div>
             </div>
         </div>
     </div>

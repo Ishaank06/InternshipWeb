@@ -17,9 +17,8 @@
                         <span class="badge-role-pill badge-role-faculty">TPO Director</span>
                     </div>
                     <div class="text-secondary small d-flex flex-wrap align-items-center gap-2">
-                        <span><i class="bi bi-shield-check text-primary me-1"></i> {{ profile.faculty_department|default:'Training & Placement Cell' }}</span>
-                        <span class="text-muted">•</span>
-                        <span><i class="bi bi-card-heading text-primary me-1"></i> Emp ID: {{ profile.employee_id|default:'TPO-DIR' }}</span>
+                        <span class="meta-chip-item"><i class="bi bi-shield-check text-primary"></i> {{ profile.faculty_department|default:'Training & Placement Cell' }}</span>
+                        <span class="meta-chip-item"><i class="bi bi-card-heading text-primary"></i> Emp ID: {{ profile.employee_id|default:'TPO-DIR' }}</span>
                     </div>
                 </div>
             </div>
@@ -37,33 +36,35 @@
     <!-- Institutional KPIs -->
     <div class="row g-3 mb-4">
         <div class="col-md-3 col-6 animate-fade-up stagger-1">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Eligible Students</div>
                 <div class="stat-number text-primary" data-count="{{ total_students }}">{{ total_students }}</div>
-                <div class="small text-muted">Graduating Cohort</div>
+                <div class="small text-muted mt-auto pt-2">Graduating Cohort</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-2">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Placement Rate</div>
                 <div class="stat-number text-success" data-count="{{ placement_rate }}" data-is-pct="true">{{ placement_rate }}%</div>
-                <div class="progress" style="height: 6px;">
-                    <div class="progress-bar bg-success" style="width: {{ placement_rate }}%"></div>
+                <div class="w-100 mt-auto pt-2">
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-success" style="width: {{ placement_rate }}%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-3">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Placed Students</div>
                 <div class="stat-number text-info" data-count="{{ total_placed }}">{{ total_placed }}</div>
-                <div class="small text-muted">With Confirmed Offers</div>
+                <div class="small text-muted mt-auto pt-2">With Confirmed Offers</div>
             </div>
         </div>
         <div class="col-md-3 col-6 animate-fade-up stagger-4">
-            <div class="stat-card">
+            <div class="stat-card stat-card-aligned">
                 <div class="stat-label">Corporate MoUs</div>
                 <div class="stat-number text-warning" data-count="{{ active_mous }}">{{ active_mous }}</div>
-                <div class="small text-muted">Active Institutional Ties</div>
+                <div class="small text-muted mt-auto pt-2">Active Institutional Ties</div>
             </div>
         </div>
     </div>

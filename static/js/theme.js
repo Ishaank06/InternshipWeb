@@ -15,14 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
  * Navbar elevation and frosted glass effect on scroll
  */
 function initNavbarScroll() {
-  const navbar = document.querySelector('.navbar-premium');
-  if (!navbar) return;
+  const navbarContainer = document.querySelector('.navbar-floating-container') || document.querySelector('.navbar-premium');
+  if (!navbarContainer) return;
 
   const handleScroll = () => {
-    if (window.scrollY > 20) {
-      navbar.classList.add('scrolled');
+    if (window.scrollY > 15) {
+      navbarContainer.classList.add('scrolled');
     } else {
-      navbar.classList.remove('scrolled');
+      navbarContainer.classList.remove('scrolled');
     }
   };
 

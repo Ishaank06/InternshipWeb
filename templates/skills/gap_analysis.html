@@ -56,7 +56,7 @@
     <!-- Match Score Summary Banner -->
     <div class="app-card p-4 mb-4 bg-white animate-fade-up stagger-2">
         <div class="row align-items-center g-4">
-            <div class="col-md-3 text-center border-end-md">
+            <div class="col-md-3 text-center responsive-col-divider">
                 <div class="small fw-bold text-secondary text-uppercase mb-1">Overall Match Score</div>
                 <div class="display-4 fw-extrabold {% if match_score >= 75 %}text-success{% elif match_score >= 50 %}text-primary{% else %}text-warning{% endif %}">
                     {{ match_score }}%
@@ -68,12 +68,10 @@
 
             <div class="col-md-9">
                 <h5 class="fw-bold mb-1">{{ selected_opp.title }}</h5>
-                <div class="text-secondary small mb-2 d-flex flex-wrap gap-2 align-items-center">
-                    <span><i class="bi bi-building text-primary"></i> {{ selected_opp.company.company_name }}</span>
-                    <span>•</span>
-                    <span class="text-success fw-bold"><i class="bi bi-cash-stack"></i> {{ selected_opp.stipend_salary }}</span>
-                    <span>•</span>
-                    <span><i class="bi bi-geo-alt text-primary"></i> {{ selected_opp.location }}</span>
+                <div class="small mb-3 d-flex flex-wrap gap-2 align-items-center">
+                    <span class="meta-chip-item"><i class="bi bi-building text-primary"></i> {{ selected_opp.company.company_name }}</span>
+                    <span class="meta-chip-item text-success fw-bold"><i class="bi bi-cash-stack"></i> {{ selected_opp.stipend_salary }}</span>
+                    <span class="meta-chip-item"><i class="bi bi-geo-alt text-primary"></i> {{ selected_opp.location }}</span>
                 </div>
                 <p class="small text-muted mb-3">{{ selected_opp.description|truncatechars:190 }}</p>
                 <div class="d-flex flex-wrap gap-2 align-items-center">

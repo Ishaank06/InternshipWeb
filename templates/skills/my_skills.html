@@ -86,9 +86,9 @@
                                 <span class="small text-muted">({{ ss.skill.category.name }})</span>
                             </div>
 
-                            <div class="d-flex align-items-center gap-2 my-2">
-                                <span class="small fw-bold text-secondary">Level {{ ss.proficiency }}/5</span>
-                                <div class="progress flex-grow-1" style="height: 8px;">
+                            <div class="d-flex align-items-center gap-2 my-2" style="min-width: 0;">
+                                <span class="small fw-bold text-secondary text-nowrap">Level {{ ss.proficiency }}/5</span>
+                                <div class="progress flex-grow-1" style="height: 8px; min-width: 60px;">
                                     <div class="progress-bar {% if ss.proficiency >= 4 %}bg-success{% elif ss.proficiency == 3 %}bg-primary{% else %}bg-warning{% endif %}" style="width: {% widthratio ss.proficiency 5 100 %}%"></div>
                                 </div>
                             </div>

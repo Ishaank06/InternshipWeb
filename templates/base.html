@@ -31,125 +31,129 @@
         </div>
     </header>
 
-    <!-- Main Navigation Bar (Frosted Glass & SaaS Design) -->
-    <nav class="navbar navbar-expand-lg navbar-premium sticky-top">
-        <div class="container">
-            <!-- Brand Logo -->
-            <a class="navbar-brand-logo" href="{% url 'home' %}">
-                <div class="brand-icon-box">
-                    <i class="bi bi-mortarboard-fill"></i>
-                </div>
-                <div>
-                    Skill<span class="text-primary">Link</span>
-                    <span class="d-none d-sm-inline text-muted fs-6 fw-normal ms-1">/ Academia</span>
-                </div>
-            </a>
+    <!-- Main Floating Island Navigation Bar -->
+    <div class="navbar-floating-container">
+        <nav class="navbar navbar-expand-lg navbar-island">
+            <div class="container-fluid px-1">
+                <!-- Brand Logo -->
+                <a class="navbar-brand-logo" href="{% url 'home' %}">
+                    <div class="brand-icon-box">
+                        <i class="bi bi-mortarboard-fill"></i>
+                        <span class="brand-live-beacon" title="Live Portal Active"></span>
+                    </div>
+                    <div>
+                        Skill<span class="text-primary">Link</span>
+                        <span class="d-none d-sm-inline text-muted fs-6 fw-normal ms-1">/ Academia</span>
+                    </div>
+                </a>
 
-            <!-- Mobile Menu Toggle Button -->
-            <button class="navbar-toggler border-0 p-2 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list fs-2 text-dark"></i>
-            </button>
+                <!-- Mobile Menu Toggle Button -->
+                <button class="navbar-toggler navbar-toggler-island d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
 
-            <!-- Nav Links & User Actions -->
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
-                            <i class="bi bi-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/internships/' in request.path and not 'my-applications' in request.path and not 'post' in request.path %}active{% endif %}" href="{% url 'opportunity_list' %}">
-                            <i class="bi bi-briefcase"></i> Internships & Jobs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/skills/' %}active{% endif %}" href="{% url 'skills_catalog' %}">
-                            <i class="bi bi-diagram-3"></i> Taxonomy
-                        </a>
-                    </li>
+                <!-- Nav Links & User Actions -->
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
+                                <i class="bi bi-house"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/internships/' in request.path and not 'my-applications' in request.path and not 'post' in request.path %}active{% endif %}" href="{% url 'opportunity_list' %}">
+                                <i class="bi bi-briefcase"></i> Drives
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/skills/' %}active{% endif %}" href="{% url 'skills_catalog' %}">
+                                <i class="bi bi-diagram-3"></i> Taxonomy
+                            </a>
+                        </li>
 
-                    {% if user.is_authenticated and user_profile.is_student %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/skills/my-skills/' in request.path %}active{% endif %}" href="{% url 'my_skills' %}">
-                            <i class="bi bi-award"></i> My Skills
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/skills/resume-extractor/' in request.path %}active{% endif %}" href="{% url 'resume_extractor' %}">
-                            <i class="bi bi-file-earmark-code"></i> Extractor
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/skills/gap-analysis/' in request.path %}active{% endif %}" href="{% url 'skill_gap_analysis' %}">
-                            <i class="bi bi-radar"></i> Gap Radar
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/internships/my-applications/' in request.path %}active{% endif %}" href="{% url 'my_applications' %}">
-                            <i class="bi bi-journal-check"></i> Applications
-                        </a>
-                    </li>
-                    {% endif %}
+                        {% if user.is_authenticated and user_profile.is_student %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/skills/my-skills/' in request.path %}active{% endif %}" href="{% url 'my_skills' %}">
+                                <i class="bi bi-award"></i> My Skills
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/skills/resume-extractor/' in request.path %}active{% endif %}" href="{% url 'resume_extractor' %}">
+                                <i class="bi bi-file-earmark-code"></i> Extractor
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/skills/gap-analysis/' in request.path %}active{% endif %}" href="{% url 'skill_gap_analysis' %}">
+                                <i class="bi bi-radar"></i> Radar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/internships/my-applications/' in request.path %}active{% endif %}" href="{% url 'my_applications' %}">
+                                <i class="bi bi-journal-check"></i> Applications
+                            </a>
+                        </li>
+                        {% endif %}
 
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/collaboration/' in request.path %}active{% endif %}" href="{% url 'collaboration_hub' %}">
-                            <i class="bi bi-people"></i> Industry Hub
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/collaboration/' in request.path %}active{% endif %}" href="{% url 'collaboration_hub' %}">
+                                <i class="bi bi-people"></i> Industry Hub
+                            </a>
+                        </li>
 
-                    {% if user.is_authenticated and user_profile.is_faculty_tpo %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if '/analytics/' in request.path %}active{% endif %}" href="{% url 'analytics' %}">
-                            <i class="bi bi-graph-up-arrow"></i> TPO Analytics
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
+                        {% if user.is_authenticated and user_profile.is_faculty_tpo %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/analytics/' in request.path %}active{% endif %}" href="{% url 'analytics' %}">
+                                <i class="bi bi-graph-up-arrow"></i> TPO Analytics
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
 
-                <!-- Right Side Auth / Role Controls -->
-                <div class="d-flex align-items-center gap-2 pt-2 pt-lg-0 border-top border-lg-0 mt-2 mt-lg-0">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-sm fw-semibold">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
+                    <!-- Right Side Auth / Role Controls -->
+                    <div class="d-flex align-items-center gap-2 pt-2 pt-lg-0 border-top border-lg-0 mt-2 mt-lg-0">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-primary btn-sm fw-semibold">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
 
-                        <div class="dropdown">
-                            <button class="user-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="badge-role-pill {% if user_profile.is_student %}badge-role-student{% elif user_profile.is_recruiter %}badge-role-recruiter{% elif user_profile.is_faculty_tpo %}badge-role-faculty{% else %}badge-role-admin{% endif %}">
-                                    {{ user_profile.get_role_display }}
-                                </span>
-                                <span class="text-truncate" style="max-width: 130px;">
-                                    {{ user.first_name|default:user.username }}
-                                </span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border rounded-3 mt-2 py-2">
-                                <li class="px-3 py-2 border-bottom mb-1">
-                                    <div class="fw-bold small text-dark">{{ user.get_full_name|default:user.username }}</div>
-                                    <div class="text-muted" style="font-size: 0.75rem;">{{ user.email }}</div>
-                                </li>
-                                <li><a class="dropdown-item py-2 small" href="{% url 'profile' %}"><i class="bi bi-person me-2 text-primary"></i> Profile Settings</a></li>
-                                <li><a class="dropdown-item py-2 small" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2 me-2 text-success"></i> Role Dashboard</a></li>
-                                {% if user_profile.is_recruiter or user_profile.is_faculty_tpo %}
-                                <li><a class="dropdown-item py-2 small" href="{% url 'post_opportunity' %}"><i class="bi bi-plus-circle me-2 text-info"></i> Post Opportunity</a></li>
-                                <li><a class="dropdown-item py-2 small" href="{% url 'manage_applications' %}"><i class="bi bi-list-check me-2 text-warning"></i> Manage Applicants</a></li>
-                                {% endif %}
-                                <li><hr class="dropdown-divider my-1"></li>
-                                <li><a class="dropdown-item py-2 small text-danger" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Log Out</a></li>
-                            </ul>
-                        </div>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-secondary btn-sm fw-semibold">
-                            <i class="bi bi-box-arrow-in-right"></i> Log In
-                        </a>
-                        <a href="{% url 'register' %}" class="btn btn-primary btn-sm fw-semibold">
-                            <i class="bi bi-person-plus"></i> Register
-                        </a>
-                    {% endif %}
+                            <div class="dropdown">
+                                <button class="user-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="status-dot online"></span>
+                                    <span class="badge-role-pill {% if user_profile.is_student %}badge-role-student{% elif user_profile.is_recruiter %}badge-role-recruiter{% elif user_profile.is_faculty_tpo %}badge-role-faculty{% else %}badge-role-admin{% endif %}">
+                                        {{ user_profile.get_role_display }}
+                                    </span>
+                                    <span class="text-truncate fw-semibold" style="max-width: 120px;">
+                                        {{ user.first_name|default:user.username }}
+                                    </span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border rounded-3 mt-2 py-2">
+                                    <li class="px-3 py-2 border-bottom mb-1">
+                                        <div class="fw-bold small text-dark">{{ user.get_full_name|default:user.username }}</div>
+                                        <div class="text-muted" style="font-size: 0.75rem;">{{ user.email }}</div>
+                                    </li>
+                                    <li><a class="dropdown-item py-2 small" href="{% url 'profile' %}"><i class="bi bi-person me-2 text-primary"></i> Profile Settings</a></li>
+                                    <li><a class="dropdown-item py-2 small" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2 me-2 text-success"></i> Role Dashboard</a></li>
+                                    {% if user_profile.is_recruiter or user_profile.is_faculty_tpo %}
+                                    <li><a class="dropdown-item py-2 small" href="{% url 'post_opportunity' %}"><i class="bi bi-plus-circle me-2 text-info"></i> Post Opportunity</a></li>
+                                    <li><a class="dropdown-item py-2 small" href="{% url 'manage_applications' %}"><i class="bi bi-list-check me-2 text-warning"></i> Manage Applicants</a></li>
+                                    {% endif %}
+                                    <li><hr class="dropdown-divider my-1"></li>
+                                    <li><a class="dropdown-item py-2 small text-danger" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Log Out</a></li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-secondary btn-sm fw-semibold">
+                                <i class="bi bi-box-arrow-in-right"></i> Log In
+                            </a>
+                            <a href="{% url 'register' %}" class="btn btn-primary btn-sm fw-semibold">
+                                <i class="bi bi-person-plus"></i> Register
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <!-- Global Toast / Flash Messages -->
     <div class="container mt-3">
