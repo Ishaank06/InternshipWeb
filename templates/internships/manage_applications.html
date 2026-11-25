@@ -5,20 +5,20 @@
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 animate-fade-up">
         <div>
-            <h3 class="fw-bold mb-1">Candidate Application & Interview Pipeline</h3>
-            <p class="text-muted small mb-0">Review candidates ranked by skill-match compatibility score.</p>
+            <h3 class="fw-bold tracking-tight mb-1">Candidate Application & Interview Pipeline</h3>
+            <p class="text-secondary small mb-0">Review and evaluate candidates ranked by automated skill-match compatibility score.</p>
         </div>
         <div class="mt-3 mt-md-0 d-flex gap-2">
             <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-arrow-left me-1"></i> Dashboard
+                <i class="bi bi-arrow-left"></i> Dashboard
             </a>
         </div>
     </div>
 
     <!-- Opportunity Selector Tabs -->
-    <div class="card-custom p-3 mb-4 bg-white">
+    <div class="app-card p-3 mb-4 bg-white animate-fade-up stagger-1">
         <label class="form-label small fw-bold text-secondary text-uppercase mb-2">Filter by Job / Internship Drive:</label>
         <div class="d-flex flex-wrap gap-2">
             {% for opp in opportunities %}
@@ -32,30 +32,30 @@
     </div>
 
     {% if selected_opp %}
-    <!-- Filter status pills -->
-    <div class="d-flex flex-wrap gap-2 mb-3">
-        <a href="{% url 'manage_applications_opp' selected_opp.id %}" class="badge p-2 {% if not status_filter %}bg-primary text-white{% else %}bg-light text-dark border{% endif %} text-decoration-none">
+    <!-- Filter Status Pills -->
+    <div class="d-flex flex-wrap gap-2 mb-3 animate-fade-up stagger-2">
+        <a href="{% url 'manage_applications_opp' selected_opp.id %}" class="badge-subtle {% if not status_filter %}badge-subtle-primary{% else %}badge-subtle-neutral{% endif %} text-decoration-none">
             All Candidates ({{ selected_opp.applications.count }})
         </a>
-        <a href="?status=APPLIED" class="badge p-2 {% if status_filter == 'APPLIED' %}bg-primary text-white{% else %}bg-light text-dark border{% endif %} text-decoration-none">
+        <a href="?status=APPLIED" class="badge-subtle {% if status_filter == 'APPLIED' %}badge-subtle-primary{% else %}badge-subtle-neutral{% endif %} text-decoration-none">
             Submitted
         </a>
-        <a href="?status=SHORTLISTED" class="badge p-2 {% if status_filter == 'SHORTLISTED' %}bg-primary text-white{% else %}bg-light text-dark border{% endif %} text-decoration-none">
+        <a href="?status=SHORTLISTED" class="badge-subtle {% if status_filter == 'SHORTLISTED' %}badge-subtle-primary{% else %}badge-subtle-neutral{% endif %} text-decoration-none">
             Shortlisted
         </a>
-        <a href="?status=INTERVIEW_SCHEDULED" class="badge p-2 {% if status_filter == 'INTERVIEW_SCHEDULED' %}bg-primary text-white{% else %}bg-light text-dark border{% endif %} text-decoration-none">
+        <a href="?status=INTERVIEW_SCHEDULED" class="badge-subtle {% if status_filter == 'INTERVIEW_SCHEDULED' %}badge-subtle-primary{% else %}badge-subtle-neutral{% endif %} text-decoration-none">
             Interview Scheduled
         </a>
-        <a href="?status=OFFERED" class="badge p-2 {% if status_filter == 'OFFERED' %}bg-primary text-white{% else %}bg-light text-dark border{% endif %} text-decoration-none">
+        <a href="?status=OFFERED" class="badge-subtle {% if status_filter == 'OFFERED' %}badge-subtle-primary{% else %}badge-subtle-neutral{% endif %} text-decoration-none">
             Offered / Selected
         </a>
     </div>
 
-    <!-- Applications Table -->
-    <div class="card-custom p-4 bg-white">
+    <!-- Applications Table Card -->
+    <div class="app-card p-4 bg-white animate-fade-up stagger-3">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light small">
+            <table class="table-modern">
+                <thead>
                     <tr>
                         <th>Candidate Profile</th>
                         <th>Skill Match Score</th>
@@ -64,35 +64,37 @@
                         <th>Actions / Decision</th>
                     </tr>
                 </thead>
-                <tbody class="small">
+                <tbody>
                     {% for app in applications %}
                     <tr>
                         <td>
-                            <strong class="fs-6">{{ app.student.user.get_full_name|default:app.student.user.username }}</strong><br>
-                            <span class="text-muted">{{ app.student.department }} (Roll: {{ app.student.roll_number }})</span><br>
-                            {% if app.student.resume_link %}
-                            <a href="{{ app.student.resume_link }}" target="_blank" class="small text-primary me-2"><i class="bi bi-file-earmark-pdf"></i> Resume</a>
-                            {% endif %}
-                            {% if app.portfolio_url %}
-                            <a href="{{ app.portfolio_url }}" target="_blank" class="small text-secondary"><i class="bi bi-link-45deg"></i> Portfolio</a>
-                            {% endif %}
+                            <strong class="fs-6 text-dark">{{ app.student.user.get_full_name|default:app.student.user.username }}</strong><br>
+                            <span class="text-muted small">{{ app.student.department }} (Roll: {{ app.student.roll_number }})</span><br>
+                            <div class="mt-1 d-flex gap-2">
+                                {% if app.student.resume_link %}
+                                <a href="{{ app.student.resume_link }}" target="_blank" class="small text-primary text-decoration-none"><i class="bi bi-file-earmark-pdf"></i> Resume</a>
+                                {% endif %}
+                                {% if app.portfolio_url %}
+                                <a href="{{ app.portfolio_url }}" target="_blank" class="small text-secondary text-decoration-none"><i class="bi bi-link-45deg"></i> Portfolio</a>
+                                {% endif %}
+                            </div>
                         </td>
                         <td>
-                            <div class="match-badge">
+                            <div class="match-badge" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;">
                                 <i class="bi bi-lightning-charge-fill"></i> {{ app.match_score }}%
                             </div>
                         </td>
                         <td>
                             <div>CGPA: <strong>{{ app.student.cgpa }}</strong></div>
-                            <div class="text-muted">Batch: {{ app.student.graduation_year }}</div>
+                            <div class="text-muted small">Batch: {{ app.student.graduation_year }}</div>
                         </td>
                         <td>
-                            <span class="badge {% if app.status == 'OFFERED' %}bg-success{% elif app.status == 'INTERVIEW_SCHEDULED' %}bg-primary{% elif app.status == 'SHORTLISTED' %}bg-info text-dark{% elif app.status == 'REJECTED' %}bg-danger{% else %}bg-secondary{% endif %}">
+                            <span class="badge-subtle {% if app.status == 'OFFERED' %}badge-subtle-success{% elif app.status == 'INTERVIEW_SCHEDULED' %}badge-subtle-primary{% elif app.status == 'SHORTLISTED' %}badge-subtle-warning{% elif app.status == 'REJECTED' %}badge-subtle-danger{% else %}badge-subtle-neutral{% endif %}">
                                 {{ app.get_status_display }}
                             </span>
                             {% if app.interview_link %}
                             <div class="small text-muted mt-1">
-                                <a href="{{ app.interview_link }}" target="_blank" class="text-danger"><i class="bi bi-camera-video"></i> Meet Link</a>
+                                <a href="{{ app.interview_link }}" target="_blank" class="text-danger fw-semibold text-decoration-none"><i class="bi bi-camera-video me-1"></i> Meet Link</a>
                             </div>
                             {% endif %}
                         </td>
@@ -103,7 +105,7 @@
                         </td>
                     </tr>
 
-                    <!-- Review Modal for each applicant -->
+                    <!-- Review Modal for applicant -->
                     <div class="modal fade" id="reviewModal{{ app.id }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -116,7 +118,7 @@
                                     <div class="modal-body small">
                                         <div class="mb-3">
                                             <label class="form-label fw-bold">Candidate Cover Note:</label>
-                                            <p class="text-muted p-2 bg-light rounded border">{{ app.cover_letter|default:'No cover note provided.' }}</p>
+                                            <p class="text-muted p-2 bg-light rounded border mb-0">{{ app.cover_letter|default:'No cover note provided.' }}</p>
                                         </div>
 
                                         <div class="mb-3">
@@ -137,7 +139,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold">Recruiter Feedback / Notes:</label>
+                                            <label class="form-label fw-bold">Recruiter Feedback / Evaluation Remarks:</label>
                                             <textarea name="recruiter_notes" class="form-control" rows="3" placeholder="Enter evaluation remarks or next round instructions...">{{ app.recruiter_notes }}</textarea>
                                         </div>
                                     </div>

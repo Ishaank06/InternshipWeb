@@ -1,78 +1,75 @@
 {% extends 'base.html' %}
 
-{% block title %}Log In - Academia-Industry Collaboration Portal{% endblock %}
+{% block title %}Sign In | SkillLink{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card-custom p-4 p-md-5">
+        <div class="col-md-7 col-lg-5 animate-fade-up">
+            <div class="app-card p-4 p-md-5 bg-white">
                 <div class="text-center mb-4">
-                    <div class="bg-primary text-white p-3 rounded-circle d-inline-flex mb-2">
-                        <i class="bi bi-person-circle fs-3"></i>
+                    <div class="brand-icon-box mx-auto mb-3" style="width: 48px; height: 48px;">
+                        <i class="bi bi-shield-lock-fill fs-4"></i>
                     </div>
-                    <h3 class="fw-bold">Sign In</h3>
-                    <p class="text-muted small">Access your customized portal dashboard</p>
+                    <h3 class="fw-bold tracking-tight mb-1">Welcome Back</h3>
+                    <p class="text-secondary small">Sign in to your customized portal dashboard</p>
                 </div>
 
-                <!-- 1-Click Demo Logins for Fast Evaluation -->
-                <div class="card p-3 mb-4 bg-light border-0 rounded-3">
-                    <div class="small fw-bold text-secondary text-uppercase mb-2 text-center">
-                        <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick 1-Click Demo Accounts
+                <!-- 1-Click Demo Accounts -->
+                <div class="p-3 mb-4 bg-light rounded-3 border">
+                    <div class="small fw-bold text-secondary text-uppercase mb-2 text-center tracking-wider">
+                        <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Quick 1-Click Demo Access
                     </div>
                     <form method="post" class="d-grid gap-2">
                         {% csrf_token %}
-                        <button type="submit" name="demo_user" value="student_rohan" class="btn btn-outline-success btn-sm text-start d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-person-fill me-1"></i> <strong>Rohan Verma</strong> (Student)</span>
-                            <span class="badge bg-success">CS Student</span>
+                        <button type="submit" name="demo_user" value="student_rohan" class="btn btn-outline-secondary btn-sm text-start d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-person-fill text-success me-1"></i> <strong>Rohan Verma</strong> (Student)</span>
+                            <span class="badge-subtle badge-subtle-success">CSE '26</span>
                         </button>
-                        <button type="submit" name="demo_user" value="student_priya" class="btn btn-outline-info btn-sm text-start d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-person-fill me-1"></i> <strong>Priya Sharma</strong> (Student)</span>
-                            <span class="badge bg-info text-dark">Cloud/DevOps</span>
+                        <button type="submit" name="demo_user" value="student_priya" class="btn btn-outline-secondary btn-sm text-start d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-person-fill text-info me-1"></i> <strong>Priya Sharma</strong> (Student)</span>
+                            <span class="badge-subtle badge-subtle-primary">DevOps</span>
                         </button>
-                        <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-outline-primary btn-sm text-start d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-building me-1"></i> <strong>Google India</strong> (Recruiter)</span>
-                            <span class="badge bg-primary">Recruiter</span>
+                        <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-outline-secondary btn-sm text-start d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-building text-primary me-1"></i> <strong>Google India</strong> (Recruiter)</span>
+                            <span class="badge-subtle badge-subtle-primary">Partner</span>
                         </button>
-                        <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-outline-dark btn-sm text-start d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-mortarboard me-1"></i> <strong>Dr. Rajiv Sharma</strong> (TPO Head)</span>
-                            <span class="badge bg-dark">Faculty / TPO</span>
-                        </button>
-                        <button type="submit" name="demo_user" value="admin" class="btn btn-outline-secondary btn-sm text-start d-flex justify-content-between align-items-center">
-                            <span><i class="bi bi-shield-lock me-1"></i> <strong>Portal Administrator</strong></span>
-                            <span class="badge bg-secondary">Admin</span>
+                        <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-outline-secondary btn-sm text-start d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-mortarboard text-dark me-1"></i> <strong>Dr. Rajiv Sharma</strong> (TPO Head)</span>
+                            <span class="badge-subtle badge-subtle-warning">TPO Cell</span>
                         </button>
                     </form>
                 </div>
 
-                <div class="text-center position-relative my-4">
-                    <hr>
-                    <span class="position-absolute top-50 start-50 translate-middle bg-white px-2 small text-muted">or standard login</span>
+                <div class="position-relative text-center my-4">
+                    <hr class="border-secondary opacity-25">
+                    <span class="position-absolute top-50 start-50 translate-middle bg-white px-2 small text-muted">or standard credentials</span>
                 </div>
 
+                <!-- Standard Login Form -->
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Username</label>
+                        <label class="form-label">Username</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+                            <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label small fw-semibold">Password</label>
-                        <div class="input-group">
+                        <label class="form-label">Password</label>
+                        <div class="input-group password-field-wrapper">
                             <span class="input-group-text"><i class="bi bi-lock"></i></span>
                             <input type="password" name="password" class="form-control" placeholder="Enter password" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In to Account
                     </button>
                 </form>
 
-                <div class="text-center mt-4 small">
-                    Don't have an account? <a href="{% url 'register' %}" class="fw-semibold text-primary">Register here</a>
+                <div class="text-center mt-4 small text-secondary">
+                    Don't have an account? <a href="{% url 'register' %}" class="fw-semibold text-primary text-decoration-none">Create an account</a>
                 </div>
             </div>
         </div>

@@ -5,29 +5,35 @@
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 animate-fade-up">
         <div>
-            <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1 mb-1">
+            <span class="badge-subtle badge-subtle-primary text-uppercase mb-1">
                 <i class="bi bi-file-earmark-code me-1"></i> Smart Extraction Tool
             </span>
-            <h3 class="fw-bold mb-0">Automated Resume & Project Skill Extractor</h3>
-            <p class="text-muted small mb-0">Paste your resume content, project summaries, or GitHub bio to automatically detect and map matching skills.</p>
+            <h3 class="fw-bold tracking-tight mb-0">Automated Resume & Project Skill Extractor</h3>
+            <p class="text-secondary small mb-0">Paste your resume content, project summaries, or GitHub bio to automatically detect and map matching competencies.</p>
         </div>
         <div class="mt-3 mt-md-0 d-flex gap-2">
             <a href="{% url 'my_skills' %}" class="btn btn-outline-primary btn-sm">
-                <i class="bi bi-award me-1"></i> View My Skills
+                <i class="bi bi-award"></i> View My Skills
             </a>
             <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-arrow-left me-1"></i> Dashboard
+                <i class="bi bi-arrow-left"></i> Dashboard
             </a>
         </div>
     </div>
 
     <div class="row g-4">
-        <!-- Input Form -->
-        <div class="col-lg-6">
-            <div class="card-custom p-4 bg-white h-100">
-                <h5 class="fw-bold mb-3"><i class="bi bi-clipboard2-data text-primary me-2"></i> Paste Resume / Bio Text</h5>
+        <!-- Input Form Card -->
+        <div class="col-lg-6 animate-fade-up stagger-1">
+            <div class="app-card p-4 bg-white h-100">
+                <div class="d-flex align-items-center gap-2 mb-3 border-bottom pb-3">
+                    <span class="bg-primary-subtle text-primary p-2 rounded-2">
+                        <i class="bi bi-clipboard2-data"></i>
+                    </span>
+                    <h5 class="fw-bold mb-0">Paste Resume / Bio Text</h5>
+                </div>
+
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -43,11 +49,16 @@
             </div>
         </div>
 
-        <!-- Extraction Results -->
-        <div class="col-lg-6">
-            <div class="card-custom p-4 bg-white h-100 d-flex flex-column justify-content-between">
+        <!-- Extraction Results Card -->
+        <div class="col-lg-6 animate-fade-up stagger-2">
+            <div class="app-card p-4 bg-white h-100 d-flex flex-column justify-content-between">
                 <div>
-                    <h5 class="fw-bold mb-3"><i class="bi bi-check2-circle text-success me-2"></i> Detected Skills from Text</h5>
+                    <div class="d-flex align-items-center gap-2 mb-3 border-bottom pb-3">
+                        <span class="bg-success-subtle text-success p-2 rounded-2">
+                            <i class="bi bi-check2-circle"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0">Detected Skills from Text</h5>
+                    </div>
                     
                     {% if extracted_skills %}
                     <form method="post">
@@ -55,7 +66,7 @@
                         <input type="hidden" name="add_detected" value="1">
                         <input type="hidden" name="resume_text" value="{{ resume_text }}">
 
-                        <p class="small text-muted mb-3">
+                        <p class="small text-secondary mb-3">
                             Found <strong>{{ extracted_skills|length }}</strong> matching skills from the university taxonomy. Select which ones to add:
                         </p>
 
@@ -64,23 +75,23 @@
                             <div class="p-2 border rounded-2 bg-light d-flex justify-content-between align-items-center">
                                 <div class="form-check mb-0">
                                     <input class="form-check-input" type="checkbox" name="selected_skills" value="{{ item.skill.id }}" id="chk_{{ item.skill.id }}" {% if not item.already_added %}checked{% else %}disabled{% endif %}>
-                                    <label class="form-check-label small fw-semibold" for="chk_{{ item.skill.id }}">
+                                    <label class="form-check-label small fw-semibold text-dark" for="chk_{{ item.skill.id }}">
                                         {{ item.skill.name }}
                                         <span class="text-muted">({{ item.skill.category.name }})</span>
                                     </label>
                                 </div>
                                 <div>
                                     {% if item.already_added %}
-                                    <span class="badge bg-secondary-subtle text-secondary small">Already on Profile</span>
+                                    <span class="badge-subtle badge-subtle-neutral">Already on Profile</span>
                                     {% else %}
-                                    <span class="badge bg-success-subtle text-success small">Ready to Add</span>
+                                    <span class="badge-subtle badge-subtle-success">Ready to Add</span>
                                     {% endif %}
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
 
-                        <div class="row g-2 align-items-center p-3 bg-light rounded-3 mb-3">
+                        <div class="row g-2 align-items-center p-3 bg-light rounded-3 mb-3 border">
                             <div class="col-md-7">
                                 <label class="form-label small fw-semibold mb-0">Default Initial Proficiency:</label>
                             </div>
@@ -99,7 +110,7 @@
                     </form>
                     {% elif resume_text %}
                     <div class="text-center py-5 text-muted">
-                        <i class="bi bi-search fs-1 d-block mb-2"></i>
+                        <i class="bi bi-search fs-1 d-block mb-2 text-secondary"></i>
                         No recognizable skills detected. Make sure to mention technologies like Python, Django, React, Docker, SQL, or Machine Learning.
                     </div>
                     {% else %}

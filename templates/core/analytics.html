@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Institutional & Placement Analytics | SkillLink{% endblock %}
+{% block title %}Accreditation & Placement Analytics | SkillLink{% endblock %}
 
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 animate-fade-up">
         <div>
-            <span class="badge bg-primary-subtle text-primary fw-bold text-uppercase px-2 py-1 mb-1">
+            <span class="badge-subtle badge-subtle-primary text-uppercase mb-1">
                 <i class="bi bi-shield-check me-1"></i> Accreditation & TPO Audit Cell
             </span>
-            <h3 class="fw-bold mb-0">Institutional Collaboration & Placement Analytics</h3>
-            <p class="text-muted small mb-0">KPI metrics for NAAC (Criteria 3 & 5), NBA (Criteria 10), and NIRF rankings.</p>
+            <h3 class="fw-bold tracking-tight mb-0">Institutional Collaboration & Placement Analytics</h3>
+            <p class="text-secondary small mb-0">KPI metrics for NAAC (Criteria 3 & 5), NBA (Criterion 10), and NIRF rankings.</p>
         </div>
         <div class="mt-3 mt-md-0 d-flex gap-2">
             <a href="{% url 'export_placement_csv' %}" class="btn btn-outline-success btn-sm">
                 <i class="bi bi-file-earmark-spreadsheet me-1"></i> Download CSV Report
             </a>
-            <button onclick="window.print()" class="btn btn-outline-dark btn-sm">
+            <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-printer me-1"></i> Print / PDF
             </button>
             <a href="{% url 'dashboard' %}" class="btn btn-primary btn-sm">
@@ -28,31 +28,31 @@
 
     <!-- Summary KPI Cards -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Graduating Students</div>
-                <div class="display-6 fw-bold text-primary my-1">{{ total_students }}</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-1">
+            <div class="stat-card">
+                <div class="stat-label">Graduating Students</div>
+                <div class="stat-number text-primary" data-count="{{ total_students }}">{{ total_students }}</div>
                 <div class="small text-muted">Total Registered Cohort</div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Placed Students</div>
-                <div class="display-6 fw-bold text-success my-1">{{ placed_students }}</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-2">
+            <div class="stat-card">
+                <div class="stat-label">Placed Students</div>
+                <div class="stat-number text-success" data-count="{{ placed_students }}">{{ placed_students }}</div>
                 <div class="small text-muted">With Verified Offers</div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Overall Placement %</div>
-                <div class="display-6 fw-bold text-info my-1">{{ placement_rate }}%</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-3">
+            <div class="stat-card">
+                <div class="stat-label">Overall Placement %</div>
+                <div class="stat-number text-info" data-count="{{ placement_rate }}" data-is-pct="true">{{ placement_rate }}%</div>
                 <div class="small text-muted">Above Institutional Target</div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Active Industry MoUs</div>
-                <div class="display-6 fw-bold text-warning my-1">{{ mous.count }}</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-4">
+            <div class="stat-card">
+                <div class="stat-label">Active Industry MoUs</div>
+                <div class="stat-number text-warning" data-count="{{ mous.count }}">{{ mous.count }}</div>
                 <div class="small text-muted">Formal Institutional Ties</div>
             </div>
         </div>
@@ -61,20 +61,36 @@
     <!-- Charts Row -->
     <div class="row g-4 mb-4">
         <!-- Placement by Department -->
-        <div class="col-lg-6">
-            <div class="card-custom p-4 h-100 bg-white">
-                <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart-fill text-primary me-2"></i> Placement Rate by Department</h5>
-                <div style="height: 280px;">
+        <div class="col-lg-6 animate-fade-up stagger-1">
+            <div class="app-card p-4 h-100 bg-white">
+                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="bg-primary-subtle text-primary p-2 rounded-2">
+                            <i class="bi bi-bar-chart-fill"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0">Placement Rate by Department</h5>
+                    </div>
+                    <span class="badge-subtle badge-subtle-primary">Campus Audited</span>
+                </div>
+                <div style="height: 290px;">
                     <canvas id="deptPlacementChart"></canvas>
                 </div>
             </div>
         </div>
 
         <!-- Industry Demand vs Student Average Proficiency -->
-        <div class="col-lg-6">
-            <div class="card-custom p-4 h-100 bg-white">
-                <h5 class="fw-bold mb-3"><i class="bi bi-graph-up text-success me-2"></i> Industry Demand vs Student Skill Proficiency</h5>
-                <div style="height: 280px;">
+        <div class="col-lg-6 animate-fade-up stagger-2">
+            <div class="app-card p-4 h-100 bg-white">
+                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="bg-success-subtle text-success p-2 rounded-2">
+                            <i class="bi bi-graph-up"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0">Corporate Demand vs Student Skill Level</h5>
+                    </div>
+                    <span class="badge-subtle badge-subtle-success">Benchmark</span>
+                </div>
+                <div style="height: 290px;">
                     <canvas id="skillGapComparisonChart"></canvas>
                 </div>
             </div>
@@ -82,31 +98,40 @@
     </div>
 
     <!-- Active MoUs Compliance Table -->
-    <div class="card-custom p-4 mb-4 bg-white">
-        <h5 class="fw-bold mb-3"><i class="bi bi-award text-warning me-2"></i> Active Industry MoUs (NAAC Criterion 3.5.2)</h5>
+    <div class="app-card p-4 mb-4 bg-white animate-fade-up">
+        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+            <div class="d-flex align-items-center gap-2">
+                <span class="bg-warning-subtle text-warning p-2 rounded-2">
+                    <i class="bi bi-award-fill"></i>
+                </span>
+                <h5 class="fw-bold mb-0">Active Corporate MoUs (NAAC Criterion 3.5.2)</h5>
+            </div>
+            <span class="badge-subtle badge-subtle-success">Accreditation Compliant</span>
+        </div>
+
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light small">
+            <table class="table-modern">
+                <thead>
                     <tr>
                         <th>Corporate Partner</th>
                         <th>Contact Lead</th>
                         <th>MoU Validity</th>
                         <th>Collaborative Scope</th>
-                        <th>Status</th>
+                        <th>Compliance Status</th>
                     </tr>
                 </thead>
-                <tbody class="small">
+                <tbody>
                     {% for mou in mous %}
                     <tr>
                         <td><strong>{{ mou.company_name }}</strong></td>
-                        <td>{{ mou.contact_person }} ({{ mou.email }})</td>
+                        <td>{{ mou.contact_person }}<br><span class="text-muted small">{{ mou.email }}</span></td>
                         <td>{{ mou.signing_date }} to {{ mou.valid_upto }}</td>
                         <td>{{ mou.focus_areas }}</td>
-                        <td><span class="badge bg-success">Active & Compliant</span></td>
+                        <td><span class="badge-subtle badge-subtle-success">Active & Compliant</span></td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center text-muted">No MoUs registered.</td>
+                        <td colspan="5" class="text-center text-muted py-4">No MoUs registered.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -127,20 +152,27 @@
             datasets: [{
                 label: 'Placement Rate (%)',
                 data: [{% for d in dept_stats %}{{ d.rate }},{% endfor %}],
-                backgroundColor: 'rgba(37, 99, 235, 0.8)',
-                borderColor: '#2563eb',
+                backgroundColor: 'rgba(79, 70, 229, 0.85)',
+                borderColor: '#4f46e5',
                 borderWidth: 1,
-                borderRadius: 6
+                borderRadius: 8
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
             scales: {
                 y: {
                     beginAtZero: true,
                     max: 100,
-                    ticks: { callback: v => v + '%' }
+                    ticks: { callback: v => v + '%' },
+                    grid: { color: 'rgba(226, 232, 240, 0.6)' }
+                },
+                x: {
+                    grid: { display: false }
                 }
             }
         }
@@ -156,25 +188,32 @@
                 {
                     label: 'Market Demand Index (0-100)',
                     data: [{% for s in skill_comparison %}{{ s.demand_index }},{% endfor %}],
-                    backgroundColor: 'rgba(239, 68, 68, 0.75)',
-                    borderRadius: 4
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    borderRadius: 6
                 },
                 {
                     label: 'Student Avg Proficiency (%)',
                     data: [{% for s in skill_comparison %}{{ s.student_avg_pct }},{% endfor %}],
-                    backgroundColor: 'rgba(16, 185, 129, 0.75)',
-                    borderRadius: 4
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                    borderRadius: 6
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
             scales: {
                 y: {
                     beginAtZero: true,
                     max: 100,
-                    ticks: { callback: v => v + '%' }
+                    ticks: { callback: v => v + '%' },
+                    grid: { color: 'rgba(226, 232, 240, 0.6)' }
+                },
+                x: {
+                    grid: { display: false }
                 }
             }
         }

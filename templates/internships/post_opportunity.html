@@ -5,86 +5,86 @@
 {% block content %}
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-lg-9">
-            <div class="card-custom p-4 p-md-5 bg-white">
+        <div class="col-lg-9 animate-fade-up">
+            <div class="app-card p-4 p-md-5 bg-white">
                 <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
                     <div>
-                        <h3 class="fw-bold mb-1">Post Internship / Campus Placement Drive</h3>
-                        <p class="text-muted small mb-0">Define role details, eligibility criteria, and required skill proficiencies.</p>
+                        <h3 class="fw-bold tracking-tight mb-1">Post Internship / Campus Placement Drive</h3>
+                        <p class="text-secondary small mb-0">Define role details, eligibility criteria, and required skill proficiency thresholds.</p>
                     </div>
                     <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-arrow-left me-1"></i> Dashboard
+                        <i class="bi bi-arrow-left"></i> Dashboard
                     </a>
                 </div>
 
                 <form method="post">
                     {% csrf_token %}
 
-                    <h5 class="fw-bold mb-3 text-primary">Role Overview</h5>
+                    <h5 class="fw-bold mb-3 text-dark fs-6"><i class="bi bi-briefcase text-primary me-2"></i> Role Overview</h5>
                     <div class="row g-3 mb-3">
                         <div class="col-md-8">
-                            <label class="form-label small fw-semibold">Job / Internship Title</label>
+                            <label class="form-label">Job / Internship Title</label>
                             {{ form.title }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Opportunity Type</label>
+                            <label class="form-label">Opportunity Type</label>
                             {{ form.opportunity_type }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Work Mode</label>
+                            <label class="form-label">Work Mode</label>
                             {{ form.work_mode }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Location / Base City</label>
+                            <label class="form-label">Location / Base City</label>
                             {{ form.location }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Stipend / CTC Offered</label>
+                            <label class="form-label">Stipend / CTC Offered</label>
                             {{ form.stipend_salary }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Duration</label>
+                            <label class="form-label">Duration</label>
                             {{ form.duration }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Number of Openings</label>
+                            <label class="form-label">Number of Openings</label>
                             {{ form.openings }}
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Application Deadline</label>
+                            <label class="form-label">Application Deadline</label>
                             {{ form.deadline }}
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-3 text-primary border-top pt-3">Eligibility & Academic Filters</h5>
+                    <h5 class="fw-bold mb-3 text-dark fs-6 border-top pt-3"><i class="bi bi-mortarboard text-success me-2"></i> Eligibility & Academic Filters</h5>
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">Minimum CGPA Cutoff</label>
+                            <label class="form-label">Minimum CGPA Cutoff</label>
                             {{ form.min_cgpa }}
                         </div>
                         <div class="col-md-8">
-                            <label class="form-label small fw-semibold">Eligible Degree Streams</label>
+                            <label class="form-label">Eligible Degree Streams</label>
                             {{ form.department_eligibility }}
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Detailed Job Description</label>
+                        <label class="form-label">Detailed Job Description</label>
                         {{ form.description }}
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Key Responsibilities</label>
+                        <label class="form-label">Key Responsibilities</label>
                         {{ form.responsibilities }}
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label small fw-semibold">Perks & Benefits (PPO, Mentorship, etc.)</label>
+                        <label class="form-label">Perks & Benefits (PPO, Mentorship, Vouchers)</label>
                         {{ form.perks }}
                     </div>
 
-                    <h5 class="fw-bold mb-3 text-primary border-top pt-3">Skill Requirements & Benchmark Levels</h5>
-                    <p class="small text-muted mb-3">Select the competencies candidates must possess for automated skill-gap matching:</p>
+                    <h5 class="fw-bold mb-3 text-dark fs-6 border-top pt-3"><i class="bi bi-radar text-info me-2"></i> Skill Requirements & Benchmark Levels</h5>
+                    <p class="small text-secondary mb-3">Select the competencies candidates must possess for automated skill-gap matching:</p>
 
                     <div class="row g-3 mb-4" style="max-height: 350px; overflow-y: auto;">
                         {% for sk in skills %}
@@ -92,12 +92,12 @@
                             <div class="p-2 border rounded-2 bg-light d-flex align-items-center justify-content-between">
                                 <div class="form-check mb-0">
                                     <input class="form-check-input" type="checkbox" name="skills" value="{{ sk.id }}" id="sk_{{ sk.id }}">
-                                    <label class="form-check-label small fw-semibold" for="sk_{{ sk.id }}">
-                                        {{ sk.name }} <span class="text-muted">({{ sk.category.name|truncatechars:15 }})</span>
+                                    <label class="form-check-label small fw-semibold text-dark" for="sk_{{ sk.id }}">
+                                        {{ sk.name }} <span class="text-muted">({{ sk.category.name|truncatechars:14 }})</span>
                                     </label>
                                 </div>
                                 <div class="d-flex align-items-center gap-1">
-                                    <select name="prof_{{ sk.id }}" class="form-select form-select-sm" style="width: 100px;">
+                                    <select name="prof_{{ sk.id }}" class="form-select form-select-sm" style="width: 95px;">
                                         <option value="1">Level 1</option>
                                         <option value="2">Level 2</option>
                                         <option value="3" selected>Level 3</option>

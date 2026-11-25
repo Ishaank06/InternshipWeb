@@ -3,91 +3,117 @@
 {% block title %}Home - Academia-Industry Collaboration Portal{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="py-5 bg-white border-bottom">
-    <div class="container py-4">
+<!-- Modern SaaS Hero Section -->
+<section class="hero-wrapper py-5">
+    <div class="hero-glow-blob" style="top: -120px; left: -100px;"></div>
+    <div class="hero-glow-blob" style="bottom: -150px; right: -80px; background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);"></div>
+
+    <div class="container py-lg-4 position-relative">
         <div class="row align-items-center g-5">
-            <div class="col-lg-7">
-                <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill mb-3">
-                    <i class="bi bi-patch-check-fill me-1"></i> Industry 4.0 Skill Mapping & Placement Engine
-                </span>
+            <!-- Left Column: Value Proposition & Actions -->
+            <div class="col-lg-7 animate-fade-up">
+                <div class="hero-tag mb-3">
+                    <i class="bi bi-patch-check-fill text-primary"></i>
+                    <span>Industry 4.0 Skill Mapping & Placement Engine</span>
+                </div>
+
                 <h1 class="display-4 fw-extrabold text-dark tracking-tight mb-3">
-                    Bridging Academia & Industry for Future-Ready Careers
+                    Bridging Academia & Corporate Industry for <span class="text-primary" style="background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Future-Ready Careers</span>
                 </h1>
-                <p class="lead text-muted mb-4">
-                    An intelligent portal providing multi-role skill mapping, AI-driven skill gap analysis, verified internship opportunities, campus placement drives, and curriculum co-design between academia and leading corporates.
+
+                <p class="lead text-secondary mb-4" style="font-size: 1.15rem; font-weight: 400; max-width: 620px;">
+                    An intelligent platform featuring diagnostic skill-gap radar analysis, verified internship postings, campus placement drives, and direct curriculum co-design between faculty and leading tech enterprises.
                 </p>
 
-                <!-- Quick Action Demo Logins -->
-                <div class="card p-3 mb-4 bg-light border-0 rounded-4 shadow-sm">
+                <!-- 1-Click Demo Logins Card -->
+                <div class="app-card-static p-3 mb-4 rounded-3 border bg-white shadow-sm" style="max-width: 600px;">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <span class="fw-bold small text-uppercase text-secondary"><i class="bi bi-lightning-charge-fill text-warning me-1"></i> 1-Click Demo Logins</span>
-                        <span class="badge bg-white text-dark border">Instant Access</span>
+                        <span class="small fw-bold text-uppercase text-secondary tracking-wider">
+                            <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Instant 1-Click Demo Logins
+                        </span>
+                        <span class="badge bg-light text-dark border small">Ready to Test</span>
                     </div>
+
                     <form method="post" action="{% url 'login' %}" class="d-flex flex-wrap gap-2">
                         {% csrf_token %}
-                        <button type="submit" name="demo_user" value="student_rohan" class="btn btn-outline-success btn-sm fw-semibold">
-                            <i class="bi bi-person-fill me-1"></i> Demo Student (Rohan)
+                        <button type="submit" name="demo_user" value="student_rohan" class="btn btn-sm btn-outline-primary fw-semibold">
+                            <i class="bi bi-person-fill text-success me-1"></i> Student (Rohan)
                         </button>
-                        <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-outline-primary btn-sm fw-semibold">
-                            <i class="bi bi-building me-1"></i> Demo Recruiter (Google)
+                        <button type="submit" name="demo_user" value="google_recruiter" class="btn btn-sm btn-outline-primary fw-semibold">
+                            <i class="bi bi-building text-primary me-1"></i> Recruiter (Google)
                         </button>
-                        <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-outline-dark btn-sm fw-semibold">
-                            <i class="bi bi-mortarboard me-1"></i> Demo Faculty / TPO Head
+                        <button type="submit" name="demo_user" value="prof_sharma" class="btn btn-sm btn-outline-primary fw-semibold">
+                            <i class="bi bi-mortarboard text-dark me-1"></i> TPO Head (Sharma)
                         </button>
                     </form>
                 </div>
 
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="{% url 'opportunity_list' %}" class="btn btn-primary btn-lg shadow-sm">
-                        <i class="bi bi-search me-2"></i> Explore Internships & Jobs
+                <!-- Primary CTAs -->
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <a href="{% url 'opportunity_list' %}" class="btn btn-gradient btn-lg">
+                        <i class="bi bi-search"></i> Explore Opportunities
                     </a>
                     <a href="{% url 'skills_catalog' %}" class="btn btn-outline-secondary btn-lg">
-                        <i class="bi bi-diagram-3 me-2"></i> View Skill Taxonomy
+                        <i class="bi bi-diagram-3"></i> View Skill Taxonomy
                     </a>
                 </div>
             </div>
-            
-            <div class="col-lg-5">
-                <div class="card-custom p-4 bg-white border">
-                    <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-speedometer text-primary"></i> Portal Ecosystem Pulse
-                    </h5>
-                    
-                    <div class="row g-3 mb-4">
+
+            <!-- Right Column: Portal Pulse Stats Card -->
+            <div class="col-lg-5 animate-fade-up stagger-2">
+                <div class="app-card p-4 bg-white">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="bg-primary-subtle text-primary p-2 rounded-2">
+                                <i class="bi bi-speedometer2"></i>
+                            </span>
+                            <h5 class="fw-bold mb-0">Ecosystem Pulse</h5>
+                        </div>
+                        <span class="badge bg-success-subtle text-success small d-flex align-items-center gap-1">
+                            <span class="spinner-grow spinner-grow-sm" role="status" style="width: 8px; height: 8px;"></span> Live
+                        </span>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="row g-3 mb-3">
                         <div class="col-6">
-                            <div class="p-3 bg-primary-subtle rounded-3 text-center">
-                                <div class="display-6 fw-bold text-primary">{{ total_students }}</div>
-                                <div class="small fw-semibold text-secondary">Registered Students</div>
+                            <div class="stat-card">
+                                <div class="stat-label">Students</div>
+                                <div class="stat-number text-primary" data-count="{{ total_students }}">{{ total_students }}</div>
+                                <div class="small text-muted">Registered Cohort</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="p-3 bg-success-subtle rounded-3 text-center">
-                                <div class="display-6 fw-bold text-success">{{ total_placed }}</div>
-                                <div class="small fw-semibold text-secondary">Offers Extended</div>
+                            <div class="stat-card">
+                                <div class="stat-label">Offers Extended</div>
+                                <div class="stat-number text-success" data-count="{{ total_placed }}">{{ total_placed }}</div>
+                                <div class="small text-muted">Hired Talent</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="p-3 bg-info-subtle rounded-3 text-center">
-                                <div class="display-6 fw-bold text-info">{{ total_opportunities }}</div>
-                                <div class="small fw-semibold text-secondary">Active Drives</div>
+                            <div class="stat-card">
+                                <div class="stat-label">Active Drives</div>
+                                <div class="stat-number text-info" data-count="{{ total_opportunities }}">{{ total_opportunities }}</div>
+                                <div class="small text-muted">Open Positions</div>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="p-3 bg-warning-subtle rounded-3 text-center">
-                                <div class="display-6 fw-bold text-warning">{{ total_mous }}</div>
-                                <div class="small fw-semibold text-secondary">Active MoUs</div>
+                            <div class="stat-card">
+                                <div class="stat-label">Corporate MoUs</div>
+                                <div class="stat-number text-warning" data-count="{{ total_mous }}">{{ total_mous }}</div>
+                                <div class="small text-muted">Active Ties</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-3 border rounded-3 bg-light">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="small fw-bold">Live Skill Gap Match Engine</span>
-                            <span class="badge bg-success">Automated</span>
+                    <!-- Feature Highlight Box -->
+                    <div class="p-3 bg-light rounded-3 border">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="small fw-bold text-dark"><i class="bi bi-cpu text-primary me-1"></i> Diagnostic Skill Match Engine</span>
+                            <span class="badge bg-success small">Automated</span>
                         </div>
-                        <p class="small text-muted mb-0">
-                            Evaluates student self-ratings and faculty-verified credentials against corporate job descriptions to produce real-time compatibility scores.
+                        <p class="small text-secondary mb-0">
+                            Quantifies student competency against employer job requirements using bounded multi-dimensional radar comparison.
                         </p>
                     </div>
                 </div>
@@ -96,90 +122,119 @@
     </div>
 </section>
 
-<!-- Core Pillars -->
-<section class="py-5">
-    <div class="container py-3">
+<!-- Core Pillars Section -->
+<section class="py-5 bg-white border-bottom">
+    <div class="container py-4">
         <div class="text-center max-w-2xl mx-auto mb-5">
-            <span class="text-primary fw-bold text-uppercase small">Comprehensive Architecture</span>
-            <h2 class="fw-bold">Key Modules & System Features</h2>
-            <p class="text-muted">Designed specifically to meet modern academic, training, and recruitment standards.</p>
+            <span class="badge-subtle badge-subtle-primary text-uppercase mb-2">Comprehensive Architecture</span>
+            <h2 class="fw-bold tracking-tight">Engineered for Academic & Recruitment Excellence</h2>
+            <p class="text-secondary small">Four specialized subsystems built for students, recruiters, and placement officers.</p>
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card-custom p-4 h-100">
-                    <div class="bg-primary-subtle text-primary p-3 rounded-4 d-inline-block mb-3" style="width: 54px; height: 54px;">
-                        <i class="bi bi-radar fs-4"></i>
+            <!-- Pillar 1 -->
+            <div class="col-md-4 animate-fade-up stagger-1">
+                <div class="app-card p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="brand-icon-box mb-3" style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); width: 50px; height: 50px;">
+                            <i class="bi bi-radar fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Diagnostic Skill Mapping</h5>
+                        <p class="text-secondary small mb-3">
+                            Standardized taxonomy across 5 core engineering domains. Students self-rate on a 5-point scale and generate real-time Radar charts against target job postings.
+                        </p>
                     </div>
-                    <h5 class="fw-bold mb-2">Skill Mapping & Gap Analysis</h5>
-                    <p class="text-muted small">
-                        Multi-dimensional skill taxonomy with 5-level proficiency matrix. Students benchmark their capabilities against industry requirements with real-time radar charts and missing skill breakdowns.
-                    </p>
-                    <a href="{% url 'skills_catalog' %}" class="small fw-bold text-decoration-none text-primary">Browse Skills <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'skills_catalog' %}" class="small fw-bold text-primary text-decoration-none">
+                        Explore Taxonomy <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card-custom p-4 h-100">
-                    <div class="bg-success-subtle text-success p-3 rounded-4 d-inline-block mb-3" style="width: 54px; height: 54px;">
-                        <i class="bi bi-briefcase fs-4"></i>
+            <!-- Pillar 2 -->
+            <div class="col-md-4 animate-fade-up stagger-2">
+                <div class="app-card p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="brand-icon-box mb-3" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); width: 50px; height: 50px;">
+                            <i class="bi bi-briefcase fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Internships & Campus Placement</h5>
+                        <p class="text-secondary small mb-3">
+                            Corporate partners post verified openings with custom skill thresholds. Students receive automated compatibility scores, apply in one click, and track video interview schedules.
+                        </p>
                     </div>
-                    <h5 class="fw-bold mb-2">Internships & Campus Placement</h5>
-                    <p class="text-muted small">
-                        Recruiters post verified internships, stipend roles, and full-time placement drives. Students receive personalized match scores, apply in one click, and track application stages seamlessly.
-                    </p>
-                    <a href="{% url 'opportunity_list' %}" class="small fw-bold text-decoration-none text-success">View Open Drives <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'opportunity_list' %}" class="small fw-bold text-success text-decoration-none">
+                        View Open Drives <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card-custom p-4 h-100">
-                    <div class="bg-warning-subtle text-warning p-3 rounded-4 d-inline-block mb-3" style="width: 54px; height: 54px;">
-                        <i class="bi bi-mortarboard fs-4"></i>
+            <!-- Pillar 3 -->
+            <div class="col-md-4 animate-fade-up stagger-3">
+                <div class="app-card p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="brand-icon-box mb-3" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); width: 50px; height: 50px;">
+                            <i class="bi bi-mortarboard fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Curriculum Co-Design & MoUs</h5>
+                        <p class="text-secondary small mb-3">
+                            Direct channel for corporate recruiters to submit syllabus modernizations to the Board of Studies, sponsor joint Capstone challenges, and maintain active MoUs for NAAC accreditation.
+                        </p>
                     </div>
-                    <h5 class="fw-bold mb-2">Curriculum Co-Design & MoUs</h5>
-                    <p class="text-muted small">
-                        Direct channel for corporate partners to provide syllabus recommendations to the Board of Studies, sponsor joint Capstone projects, and maintain legal institutional MoUs for NAAC accreditation.
-                    </p>
-                    <a href="{% url 'collaboration_hub' %}" class="small fw-bold text-decoration-none text-warning">Explore Collaborations <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'collaboration_hub' %}" class="small fw-bold text-warning-dark text-decoration-none">
+                        Explore Collaborations <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Opportunities -->
-<section class="py-5 bg-white border-top border-bottom">
-    <div class="container">
-        <div class="d-flex align-items-center justify-content-between mb-4">
+<!-- Featured Opportunities Section -->
+<section class="py-5">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
             <div>
-                <h3 class="fw-bold mb-1">Featured Internships & Placement Drives</h3>
-                <p class="text-muted small mb-0">High-stipend internships and prestigious placement offers.</p>
+                <h3 class="fw-bold mb-1">Featured Campus Placement & Internship Drives</h3>
+                <p class="text-secondary small mb-0">High-stipend internships and competitive full-time placement packages.</p>
             </div>
-            <a href="{% url 'opportunity_list' %}" class="btn btn-outline-primary btn-sm fw-semibold">View All Positions</a>
+            <a href="{% url 'opportunity_list' %}" class="btn btn-outline-primary btn-sm mt-2 mt-md-0">
+                View All Positions <i class="bi bi-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <div class="row g-4">
             {% for opp in recent_opportunities %}
             <div class="col-md-6 col-lg-3">
-                <div class="card-custom p-3 h-100 d-flex flex-direction-column justify-content-between">
+                <div class="app-card p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex align-items-start justify-content-between mb-2">
-                            <span class="badge {% if opp.opportunity_type == 'INTERNSHIP' %}bg-primary-subtle text-primary{% else %}bg-success-subtle text-success{% endif %}">
+                            <span class="badge-subtle {% if opp.opportunity_type == 'INTERNSHIP' %}badge-subtle-primary{% else %}badge-subtle-success{% endif %}">
                                 {{ opp.get_opportunity_type_display }}
                             </span>
                             <span class="small text-muted">{{ opp.work_mode }}</span>
                         </div>
-                        <h6 class="fw-bold mb-1"><a href="{% url 'opportunity_detail' opp.id %}" class="text-dark text-decoration-none">{{ opp.title }}</a></h6>
-                        <div class="small text-secondary mb-2"><i class="bi bi-building me-1"></i> {{ opp.company.company_name|default:opp.company.user.username }}</div>
-                        <div class="fw-bold text-success small mb-2"><i class="bi bi-cash-stack me-1"></i> {{ opp.stipend_salary }}</div>
-                        <p class="small text-muted line-clamp-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+
+                        <h6 class="fw-bold mb-1">
+                            <a href="{% url 'opportunity_detail' opp.id %}" class="text-dark text-decoration-none">
+                                {{ opp.title }}
+                            </a>
+                        </h6>
+                        <div class="small text-secondary mb-2">
+                            <i class="bi bi-building me-1"></i> {{ opp.company.company_name|default:opp.company.user.username }}
+                        </div>
+                        <div class="fw-bold text-success small mb-2">
+                            <i class="bi bi-cash-stack me-1"></i> {{ opp.stipend_salary }}
+                        </div>
+                        <p class="small text-muted line-clamp-2 mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                             {{ opp.description }}
                         </p>
                     </div>
-                    <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
-                        <span class="small text-muted"><i class="bi bi-geo-alt"></i> {{ opp.location|truncatechars:18 }}</span>
-                        <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-outline-primary">Details</a>
+
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <span class="small text-muted"><i class="bi bi-geo-alt"></i> {{ opp.location|truncatechars:16 }}</span>
+                        <a href="{% url 'opportunity_detail' opp.id %}" class="btn btn-sm btn-outline-primary">
+                            Details
+                        </a>
                     </div>
                 </div>
             </div>
@@ -188,19 +243,18 @@
     </div>
 </section>
 
-<!-- Trending Skills -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-4">
-            <h3 class="fw-bold">Trending Skills Demanded by Industry</h3>
-            <p class="text-muted small">Most requested competencies in current campus recruitment drives.</p>
-        </div>
+<!-- Trending Skills Bar -->
+<section class="py-5 bg-white border-top">
+    <div class="container text-center">
+        <h4 class="fw-bold mb-2">Most In-Demand Skills in Current Drives</h4>
+        <p class="text-secondary small mb-4">Competencies with highest corporate recruitment demand indices.</p>
+
         <div class="d-flex flex-wrap justify-content-center gap-2">
             {% for sk in trending_skills %}
-            <span class="badge bg-white text-dark border p-2 px-3 rounded-pill shadow-sm d-flex align-items-center gap-2">
-                <i class="bi bi-lightning-charge-fill text-warning"></i>
-                <span class="fw-bold">{{ sk.name }}</span>
-                <span class="badge bg-primary-subtle text-primary small">Index: {{ sk.industry_demand_index }}/100</span>
+            <span class="app-card-static px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 small">
+                <i class="bi bi-fire text-danger"></i>
+                <strong class="text-dark">{{ sk.name }}</strong>
+                <span class="badge-subtle badge-subtle-primary" style="font-size: 0.7rem;">Index: {{ sk.industry_demand_index }}/100</span>
             </span>
             {% endfor %}
         </div>

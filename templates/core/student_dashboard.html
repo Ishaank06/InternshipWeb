@@ -5,102 +5,116 @@
 {% block content %}
 <div class="container py-4">
     <!-- Student Header Banner -->
-    <div class="card-custom p-4 mb-4 bg-white">
+    <div class="app-card p-4 mb-4 bg-white animate-fade-up">
         <div class="row align-items-center g-3">
             <div class="col-md-8 d-flex align-items-center gap-3">
-                <div class="bg-primary-subtle text-primary p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
-                    <i class="bi bi-person-badge fs-2"></i>
+                <div class="brand-icon-box" style="width: 60px; height: 60px; font-size: 1.6rem;">
+                    <i class="bi bi-person-badge"></i>
                 </div>
                 <div>
-                    <h4 class="fw-bold mb-1">{{ user.get_full_name|default:user.username }}</h4>
-                    <div class="text-secondary small">
-                        <span><i class="bi bi-card-text me-1"></i> Roll No: <strong>{{ profile.roll_number|default:'N/A' }}</strong></span>
-                        <span class="mx-2">•</span>
-                        <span><i class="bi bi-mortarboard me-1"></i> {{ profile.department }}</span>
-                        <span class="mx-2">•</span>
-                        <span><i class="bi bi-star-fill text-warning me-1"></i> CGPA: <strong>{{ profile.cgpa }}</strong></span>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <h4 class="fw-bold mb-0 text-dark">{{ user.get_full_name|default:user.username }}</h4>
+                        <span class="badge-role-pill badge-role-student">Student</span>
+                    </div>
+                    <div class="text-secondary small d-flex flex-wrap align-items-center gap-2">
+                        <span><i class="bi bi-card-text me-1 text-primary"></i> Roll: <strong>{{ profile.roll_number|default:'N/A' }}</strong></span>
+                        <span class="text-muted">•</span>
+                        <span><i class="bi bi-mortarboard me-1 text-primary"></i> {{ profile.department }}</span>
+                        <span class="text-muted">•</span>
+                        <span class="badge-subtle badge-subtle-success"><i class="bi bi-star-fill me-1"></i> CGPA: {{ profile.cgpa }}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 text-md-end">
-                <a href="{% url 'my_skills' %}" class="btn btn-outline-primary btn-sm me-2">
-                    <i class="bi bi-plus-circle me-1"></i> Add / Edit Skills
+            <div class="col-md-4 text-md-end d-flex justify-content-md-end gap-2">
+                <a href="{% url 'my_skills' %}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-plus-circle"></i> Manage Skills
                 </a>
-                <a href="{% url 'skill_gap_analysis' %}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-radar me-1"></i> Gap Analyzer
+                <a href="{% url 'skill_gap_analysis' %}" class="btn btn-gradient btn-sm">
+                    <i class="bi bi-radar"></i> Gap Analyzer
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Metrics Cards -->
+    <!-- Animated Metric Cards -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Mapped Skills</div>
-                <div class="display-6 fw-bold text-primary my-1">{{ skill_count }}</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-1">
+            <div class="stat-card">
+                <div class="stat-label">Mapped Skills</div>
+                <div class="stat-number text-primary" data-count="{{ skill_count }}">{{ skill_count }}</div>
                 <div class="small text-muted">{{ verified_count }} Verified by Faculty</div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Skill Readiness</div>
-                <div class="display-6 fw-bold text-success my-1">{{ readiness_index }}%</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-2">
+            <div class="stat-card">
+                <div class="stat-label">Skill Readiness</div>
+                <div class="stat-number text-success" data-count="{{ readiness_index }}" data-is-pct="true">{{ readiness_index }}%</div>
                 <div class="progress" style="height: 6px;">
                     <div class="progress-bar bg-success" style="width: {{ readiness_index }}%"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Applications Sent</div>
-                <div class="display-6 fw-bold text-info my-1">{{ applied_count }}</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-3">
+            <div class="stat-card">
+                <div class="stat-label">Applications Sent</div>
+                <div class="stat-number text-info" data-count="{{ applied_count }}">{{ applied_count }}</div>
                 <div class="small text-muted">{{ interviews_count }} Interviews Scheduled</div>
             </div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="card-custom p-3 bg-white text-center">
-                <div class="text-secondary small fw-semibold">Job / Intern Offers</div>
-                <div class="display-6 fw-bold text-warning my-1">{{ offers_count }}</div>
-                <div class="small text-success fw-bold">Active Selections</div>
+        <div class="col-md-3 col-6 animate-fade-up stagger-4">
+            <div class="stat-card">
+                <div class="stat-label">Job / Intern Offers</div>
+                <div class="stat-number text-warning" data-count="{{ offers_count }}">{{ offers_count }}</div>
+                <div class="small text-success fw-bold"><i class="bi bi-check-circle-fill"></i> Active Offers</div>
             </div>
         </div>
     </div>
 
     <div class="row g-4">
-        <!-- Recommended Internships matching skills -->
+        <!-- Main Column: Recommended Opportunities & Application Tracker -->
         <div class="col-lg-8">
-            <div class="card-custom p-4 mb-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0"><i class="bi bi-bullseye text-primary me-2"></i> Recommended Opportunities For Your Skills</h5>
-                    <a href="{% url 'opportunity_list' %}" class="small text-primary text-decoration-none fw-semibold">Explore All</a>
+            <!-- Recommended Opportunities Matching Skills -->
+            <div class="app-card p-4 mb-4 bg-white animate-fade-up">
+                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="bg-primary-subtle text-primary p-2 rounded-2">
+                            <i class="bi bi-bullseye"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0">Recommended for Your Skill Profile</h5>
+                    </div>
+                    <a href="{% url 'opportunity_list' %}" class="small text-primary text-decoration-none fw-semibold">
+                        Explore All <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
 
                 <div class="d-flex flex-column gap-3">
                     {% for rec in recommendations %}
                     <div class="p-3 border rounded-3 bg-light d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                        <div>
+                        <div class="flex-grow-1">
                             <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge {% if rec.opportunity.opportunity_type == 'INTERNSHIP' %}bg-primary-subtle text-primary{% else %}bg-success-subtle text-success{% endif %}">
+                                <span class="badge-subtle {% if rec.opportunity.opportunity_type == 'INTERNSHIP' %}badge-subtle-primary{% else %}badge-subtle-success{% endif %}">
                                     {{ rec.opportunity.get_opportunity_type_display }}
                                 </span>
-                                <span class="badge bg-secondary-subtle text-secondary">{{ rec.opportunity.work_mode }}</span>
+                                <span class="badge-subtle badge-subtle-neutral">{{ rec.opportunity.work_mode }}</span>
                                 <span class="small text-muted"><i class="bi bi-geo-alt"></i> {{ rec.opportunity.location }}</span>
                             </div>
+
                             <h6 class="fw-bold mb-1">
                                 <a href="{% url 'opportunity_detail' rec.opportunity.id %}" class="text-dark text-decoration-none">
                                     {{ rec.opportunity.title }}
                                 </a>
                             </h6>
-                            <div class="small text-secondary mb-1">
+
+                            <div class="small text-secondary mb-2">
                                 <i class="bi bi-building"></i> {{ rec.opportunity.company.company_name|default:rec.opportunity.company.user.username }}
                                 <span class="mx-2">•</span>
                                 <strong class="text-success">{{ rec.opportunity.stipend_salary }}</strong>
                             </div>
-                            <div class="small text-muted">
-                                <span class="text-success"><i class="bi bi-check-circle-fill"></i> {{ rec.matching_count }} matching skills</span>
+
+                            <div class="small d-flex flex-wrap gap-2">
+                                <span class="text-success fw-semibold"><i class="bi bi-check-circle-fill"></i> {{ rec.matching_count }} matching skills</span>
                                 {% if rec.missing_count > 0 %}
-                                <span class="text-warning ms-2"><i class="bi bi-exclamation-triangle-fill"></i> {{ rec.missing_count }} gap skills</span>
+                                <span class="text-warning-dark fw-semibold"><i class="bi bi-exclamation-triangle-fill"></i> {{ rec.missing_count }} gap skills</span>
                                 {% endif %}
                             </div>
                         </div>
@@ -110,10 +124,10 @@
                                 <i class="bi bi-lightning-charge-fill"></i> {{ rec.match_score }}% Match
                             </div>
                             {% if rec.has_applied %}
-                                <span class="badge bg-secondary"><i class="bi bi-check2"></i> Already Applied</span>
+                                <span class="badge bg-secondary"><i class="bi bi-check2"></i> Applied</span>
                             {% else %}
                                 <a href="{% url 'opportunity_detail' rec.opportunity.id %}" class="btn btn-sm btn-primary">
-                                    Apply Now
+                                    View & Apply
                                 </a>
                             {% endif %}
                         </div>
@@ -124,16 +138,23 @@
                 </div>
             </div>
 
-            <!-- Active Applications Tracker -->
-            <div class="card-custom p-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-history text-primary me-2"></i> Recent Application Status</h5>
-                    <a href="{% url 'my_applications' %}" class="small text-primary text-decoration-none fw-semibold">View All</a>
+            <!-- Active Applications Tracker Table -->
+            <div class="app-card p-4 bg-white animate-fade-up stagger-2">
+                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="bg-primary-subtle text-primary p-2 rounded-2">
+                            <i class="bi bi-clock-history"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0">Application Tracker & Schedules</h5>
+                    </div>
+                    <a href="{% url 'my_applications' %}" class="small text-primary text-decoration-none fw-semibold">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light small">
+                    <table class="table-modern">
+                        <thead>
                             <tr>
                                 <th>Role & Company</th>
                                 <th>Match Score</th>
@@ -141,36 +162,38 @@
                                 <th>Interview / Action</th>
                             </tr>
                         </thead>
-                        <tbody class="small">
+                        <tbody>
                             {% for app in applications %}
                             <tr>
                                 <td>
                                     <strong>{{ app.opportunity.title }}</strong><br>
-                                    <span class="text-muted">{{ app.opportunity.company.company_name }}</span>
+                                    <span class="text-muted small">{{ app.opportunity.company.company_name }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-success-subtle text-success fw-bold">{{ app.match_score }}%</span>
+                                    <span class="match-badge" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;">
+                                        <i class="bi bi-lightning-charge-fill"></i> {{ app.match_score }}%
+                                    </span>
                                 </td>
                                 <td>
-                                    <span class="badge {% if app.status == 'OFFERED' %}bg-success{% elif app.status == 'INTERVIEW_SCHEDULED' %}bg-primary{% elif app.status == 'SHORTLISTED' %}bg-info text-dark{% else %}bg-secondary{% endif %}">
+                                    <span class="badge-subtle {% if app.status == 'OFFERED' %}badge-subtle-success{% elif app.status == 'INTERVIEW_SCHEDULED' %}badge-subtle-primary{% elif app.status == 'SHORTLISTED' %}badge-subtle-warning{% else %}badge-subtle-neutral{% endif %}">
                                         {{ app.get_status_display }}
                                     </span>
                                 </td>
                                 <td>
                                     {% if app.interview_link %}
-                                        <a href="{{ app.interview_link }}" target="_blank" class="btn btn-sm btn-outline-danger">
-                                            <i class="bi bi-camera-video me-1"></i> Join Meeting
+                                        <a href="{{ app.interview_link }}" target="_blank" class="btn btn-sm btn-danger py-1 px-2" style="font-size: 0.75rem;">
+                                            <i class="bi bi-camera-video"></i> Join Video
                                         </a>
                                     {% elif app.status == 'OFFERED' %}
-                                        <span class="text-success fw-bold"><i class="bi bi-patch-check"></i> Offer Received</span>
+                                        <span class="text-success fw-bold small"><i class="bi bi-award-fill"></i> Offer Letter</span>
                                     {% else %}
-                                        <span class="text-muted">In Pipeline</span>
+                                        <span class="text-muted small">In Review</span>
                                     {% endif %}
                                 </td>
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-3">You haven't submitted any applications yet.</td>
+                                <td colspan="4" class="text-center text-muted py-4">You haven't submitted any applications yet.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -179,47 +202,54 @@
             </div>
         </div>
 
-        <!-- Student Skills Breakdown Sidebar -->
+        <!-- Sidebar: Skill Matrix & Extractor Tool -->
         <div class="col-lg-4">
-            <div class="card-custom p-4 mb-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0">My Skill Matrix</h5>
+            <!-- Skill Matrix Summary Card -->
+            <div class="app-card p-4 mb-4 bg-white animate-fade-up">
+                <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                    <h5 class="fw-bold mb-0">My Skill Competencies</h5>
                     <a href="{% url 'my_skills' %}" class="small text-primary text-decoration-none fw-semibold">Manage</a>
                 </div>
 
-                <div class="d-flex flex-column gap-3">
+                <div class="d-flex flex-column gap-3 mb-4">
                     {% for ss in student_skills %}
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-1 small">
-                            <span class="fw-semibold">
+                            <span class="fw-semibold text-dark">
                                 {{ ss.skill.name }}
                                 {% if ss.is_verified %}
                                 <i class="bi bi-patch-check-fill text-primary" title="Verified by TPO"></i>
                                 {% endif %}
                             </span>
-                            <span class="text-muted">{{ ss.proficiency }}/5</span>
+                            <span class="text-muted fw-bold">{{ ss.proficiency }}/5</span>
                         </div>
                         <div class="progress" style="height: 6px;">
                             <div class="progress-bar {% if ss.proficiency >= 4 %}bg-success{% elif ss.proficiency == 3 %}bg-primary{% else %}bg-warning{% endif %}" style="width: {% widthratio ss.proficiency 5 100 %}%"></div>
                         </div>
                     </div>
                     {% empty %}
-                    <p class="text-muted small">No skills added yet. Click 'Add Skills' to map your competencies!</p>
+                    <p class="text-muted small text-center py-3">No skills added yet.</p>
                     {% endfor %}
                 </div>
 
-                <div class="mt-4 pt-3 border-top text-center">
-                    <a href="{% url 'skill_gap_analysis' %}" class="btn btn-outline-primary w-100 btn-sm">
-                        <i class="bi bi-radar me-1"></i> Run Radar Gap Analysis
+                <div class="d-grid gap-2">
+                    <a href="{% url 'resume_extractor' %}" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-file-earmark-code"></i> Auto-Extract from Resume
+                    </a>
+                    <a href="{% url 'skill_gap_analysis' %}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-radar"></i> Run Radar Diagnostic
                     </a>
                 </div>
             </div>
 
-            <!-- TPO Guidance Banner -->
-            <div class="card-custom p-3 bg-light border-0">
-                <h6 class="fw-bold mb-2"><i class="bi bi-info-circle text-primary me-1"></i> TPO Office Tip</h6>
-                <p class="small text-muted mb-0">
-                    Get your skill certificates verified by Faculty to boost your ranking in recruiter shortlisting filters!
+            <!-- TPO Advisory Note -->
+            <div class="app-card-static p-3 bg-light rounded-3 border">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-info-circle-fill text-primary"></i>
+                    <span class="small fw-bold text-dark">TPO Advisory</span>
+                </div>
+                <p class="small text-secondary mb-0">
+                    Students with at least 3 faculty-verified skill certifications rank on average 40% higher in recruiter shortlisting filters.
                 </p>
             </div>
         </div>
